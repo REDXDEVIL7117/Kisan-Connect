@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sell Something | Kisan Connect</title>
+
+    <link rel="stylesheet" href="css/marketplace.css">
+    <link rel="stylesheet" href="css/sell-product.css">
+</head>
+
+<body>
+
+<!-- ==============================
+     HEADER
+================================== -->
+
+<header class="market-header">
+
+    <div class="market-logo">
+        🌾 <span>Kisan Connect</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="marketplace.html">Marketplace</a>
+    </nav>
+
+    <div class="market-actions">
+
+        <button id="themeBtn">🌙</button>
+
+    </div>
+
+</header>
+
+
+<!-- ==============================
+     PAGE
+================================== -->
+
+<main class="sell-page">
+
+    <div class="sell-container">
+
+        <div class="sell-heading">
+
+            <span class="market-tag">
+                🛒 Kisan Connect Marketplace
+            </span>
+
+            <h1>List Something for Sale</h1>
+
+            <p>
+                Sell your crops, tools, seeds, fertilizers,
+                equipment and other useful items to the Kisan
+                Connect community.
+            </p>
+
+        </div>
+
+
+        <!-- ==============================
+             SELL FORM
+        ================================== -->
+
+        <form id="sellForm">
+
+
+            <!-- PRODUCT IMAGES -->
+
+            <div class="form-section">
+
+                <h2>📸 Product Images</h2>
+
+                <p class="form-help">
+                    Upload clear images of your product.
+                </p>
+
+                <label for="productImages" class="upload-box">
+
+                    <span>📷</span>
+
+                    <strong>
+                        Choose Images
+                    </strong>
+
+                    <small>
+                        You can select multiple images
+                    </small>
+
+                </label>
+
+                <input
+                    type="file"
+                    id="productImages"
+                    accept="image/*"
+                    multiple
+                    hidden
+                >
+
+                <div
+                    id="imagePreview"
+                    class="image-preview">
+                </div>
+
+            </div>
+
+
+            <!-- BASIC INFORMATION -->
+
+            <div class="form-section">
+
+                <h2>🏷️ Product Information</h2>
+
+
+                <label for="productName">
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Example: Wheat Seeds"
+                    maxlength="100"
+                    required
+                >
+
+
+                <label for="category">
+                    Category
+                </label>
+
+                <select id="category" required>
+
+                    <option value="">
+                        Select a category
+                    </option>
+
+                    <option value="Crops">
+                        🌾 Crops
+                    </option>
+
+                    <option value="Tools">
+                        🛠️ Tools
+                    </option>
+
+                    <option value="Labour">
+                        👷 Labour
+                    </option>
+
+                    <option value="Fertilizers">
+                        🧪 Fertilizers
+                    </option>
+
+                    <option value="Seeds">
+                        🌱 Seeds
+                    </option>
+
+                    <option value="Irrigation">
+                        💧 Irrigation
+                    </option>
+
+                    <option value="Equipment">
+                        🚜 Equipment
+                    </option>
+
+                    <option value="Other">
+                        📦 Other
+                    </option>
+
+                    <option value="Livestock" disabled>
+                        🐄 Livestock (Coming Soon)
+                    </option>
+
+                </select>
+
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Describe your product, its condition, quality, features, etc."
+                    maxlength="2000"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- PRICE AND QUANTITY -->
+
+            <div class="form-section">
+
+                <h2>💰 Price & Quantity</h2>
+
+
+                <div class="form-row">
+
+                    <div>
+
+                        <label for="price">
+                            Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="price"
+                            placeholder="Enter price"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="unit">
+                            Unit
+                        </label>
+
+                        <select id="unit" required>
+
+                            <option value="">
+                                Select unit
+                            </option>
+
+                            <option value="piece">
+                                Piece
+                            </option>
+
+                            <option value="kg">
+                                Kilogram (kg)
+                            </option>
+
+                            <option value="quintal">
+                                Quintal
+                            </option>
+
+                            <option value="ton">
+                                Ton
+                            </option>
+
+                            <option value="litre">
+                                Litre
+                            </option>
+
+                            <option value="packet">
+                                Packet
+                            </option>
+
+                            <option value="set">
+                                Set
+                            </option>
+
+                            <option value="other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="quantity">
+                            Quantity Available
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            placeholder="Quantity"
+                            min="1"
+                            step="1"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="form-section">
+
+                <h2>📍 Location</h2>
+
+                <label for="location">
+                    Where is the product located?
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Example: Bikaner, Rajasthan"
+                    maxlength="150"
+                    required
+                >
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <div class="form-actions">
+
+                <a
+                    href="marketplace.html"
+                    class="cancel-btn">
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="publish-btn">
+                    🚀 Publish Listing
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+
+<!-- ==============================
+     FOOTER
+================================== -->
+
+<footer class="market-footer">
+
+    <h2>🌾 Kisan Connect</h2>
+
+    <p>
+        Connecting farmers, workers and sellers.
+    </p>
+
+    <p class="copyright">
+        © 2026 Kisan Connect
+    </p>
+
+</footer>
+
+
+<script src="js/sell-product.js"></script>
+
+</body>
+</html>

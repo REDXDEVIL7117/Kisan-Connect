@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Marketplace | Kisan Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/marketplace.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="market-header">
+
+    <div class="market-logo">
+        🌾 <span>Kisan Connect</span>
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a
+    href="#"
+    id="dashboardLink"
+>
+    Dashboard
+        </a>
+
+    </nav>
+
+
+    <div class="market-actions">
+
+        <button id="themeBtn">
+            🌙
+        </button>
+
+        <a
+            href="sell-product.html"
+            class="sell-btn"
+        >
+            + Sell Something
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==========================================
+     HERO
+========================================== -->
+
+<section class="market-hero">
+
+    <span class="market-tag">
+        🛒 Kisan Connect Marketplace
+    </span>
+
+
+    <h1>
+        Buy, Sell & Connect
+    </h1>
+
+
+    <p>
+        A marketplace for farmers, sellers
+        and labourers to buy and sell useful
+        agricultural products, tools, seeds,
+        fertilizers, equipment and more.
+    </p>
+
+</section>
+
+
+
+<!-- ==========================================
+     SEARCH
+========================================== -->
+
+<section class="market-search">
+
+    <input
+        type="search"
+        id="searchInput"
+        placeholder="🔎 Search crops, tools, seeds, fertilizers, equipment..."
+        autocomplete="off"
+    >
+
+</section>
+
+
+
+<!-- ==========================================
+     CATEGORIES
+========================================== -->
+
+<section class="categories">
+
+    <div class="section-heading">
+
+        <h2>
+            Browse Categories
+        </h2>
+
+        <p>
+            Quickly find what you're looking for.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+
+        <!-- CROPS -->
+
+        <button
+            class="category-card"
+            data-category="Crops"
+        >
+
+            <span>
+                🌾
+            </span>
+
+            <strong>
+                Crops
+            </strong>
+
+            <small>
+                Fresh agricultural produce
+            </small>
+
+        </button>
+
+
+
+        <!-- TOOLS -->
+
+        <button
+            class="category-card"
+            data-category="Tools"
+        >
+
+            <span>
+                🛠️
+            </span>
+
+            <strong>
+                Tools
+            </strong>
+
+            <small>
+                New & used farming tools
+            </small>
+
+        </button>
+
+
+
+        <!-- LABOUR -->
+
+        <button
+            class="category-card"
+            data-category="Labour"
+        >
+
+            <span>
+                👷
+            </span>
+
+            <strong>
+                Labour
+            </strong>
+
+            <small>
+                Agricultural workers & services
+            </small>
+
+        </button>
+
+
+
+        <!-- FERTILIZERS -->
+
+        <button
+            class="category-card"
+            data-category="Fertilizers"
+        >
+
+            <span>
+                🧪
+            </span>
+
+            <strong>
+                Fertilizers
+            </strong>
+
+            <small>
+                Farming fertilizers
+            </small>
+
+        </button>
+
+
+
+        <!-- SEEDS -->
+
+        <button
+            class="category-card"
+            data-category="Seeds"
+        >
+
+            <span>
+                🌱
+            </span>
+
+            <strong>
+                Seeds
+            </strong>
+
+            <small>
+                Seeds for different crops
+            </small>
+
+        </button>
+
+
+
+        <!-- IRRIGATION -->
+
+        <button
+            class="category-card"
+            data-category="Irrigation"
+        >
+
+            <span>
+                💧
+            </span>
+
+            <strong>
+                Irrigation
+            </strong>
+
+            <small>
+                Watering & irrigation equipment
+            </small>
+
+        </button>
+
+
+
+        <!-- EQUIPMENT -->
+
+        <button
+            class="category-card"
+            data-category="Equipment"
+        >
+
+            <span>
+                🚜
+            </span>
+
+            <strong>
+                Equipment
+            </strong>
+
+            <small>
+                Farming machines & equipment
+            </small>
+
+        </button>
+
+
+
+        <!-- OTHER -->
+
+        <button
+            class="category-card"
+            data-category="Other"
+        >
+
+            <span>
+                📦
+            </span>
+
+            <strong>
+                Other
+            </strong>
+
+            <small>
+                Other marketplace items
+            </small>
+
+        </button>
+
+
+
+        <!-- LIVESTOCK -->
+
+        <button
+            class="category-card future-category"
+            data-category="Livestock"
+        >
+
+            <span>
+                🐄
+            </span>
+
+            <strong>
+                Livestock
+            </strong>
+
+            <small>
+                Coming soon
+            </small>
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     MARKETPLACE LISTINGS
+========================================== -->
+
+<section class="market-listings">
+
+
+    <div class="section-heading listings-heading">
+
+        <div>
+
+            <h2>
+                Marketplace Listings
+            </h2>
+
+            <p>
+                Products and services listed by the
+                Kisan Connect community.
+            </p>
+
+        </div>
+
+
+        <button
+            id="clearFilterBtn"
+            class="clear-filter"
+        >
+            Show All
+        </button>
+
+    </div>
+
+
+
+    <!--
+        JavaScript will automatically put
+        product cards inside this container.
+    -->
+
+    <div
+        id="productsContainer"
+        class="products-grid"
+    >
+
+        <div class="empty-marketplace">
+
+            <div class="empty-icon">
+                🛒
+            </div>
+
+            <h3>
+                No listings yet
+            </h3>
+
+            <p>
+                Be the first person to list
+                something on Kisan Connect.
+            </p>
+
+            <a
+                href="sell-product.html"
+                class="sell-btn"
+            >
+                + Sell Something
+            </a>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="market-footer">
+
+    <h2>
+        🌾 Kisan Connect
+    </h2>
+
+    <p>
+        Connecting farmers, workers and sellers.
+    </p>
+
+
+    <p class="copyright">
+        © 2026 Kisan Connect. All rights reserved.
+    </p>
+
+</footer>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+
+<script src="js/marketplace.js"></script>
+
+
+</body>
+
+</html>

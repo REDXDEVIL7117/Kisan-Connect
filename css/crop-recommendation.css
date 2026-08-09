@@ -1,0 +1,508 @@
+/* ==========================================
+   KISAN CONNECT
+   CROP RECOMMENDATION
+   STAGE 8.2
+========================================== */
+
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+/* ==========================================
+   BODY
+========================================== */
+
+body{
+    background:#f4f7f4;
+    color:#222;
+    min-height:100vh;
+    transition:.3s;
+}
+
+body.dark{
+    background:#111827;
+    color:#f5f5f5;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 35px;
+
+    background:#2e7d32;
+
+    color:white;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+.topbar h1{
+
+    flex:1;
+
+    text-align:center;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+}
+
+/* ==========================================
+   BACK BUTTON
+========================================== */
+
+.back-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:120px;
+
+    height:46px;
+
+    background:white;
+
+    color:#2e7d32;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+    font-size:17px;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.15);
+
+    transition:.25s;
+
+    flex-shrink:0;
+
+}
+
+.back-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   THEME BUTTON
+========================================== */
+
+.theme-btn{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:white;
+
+    color:#2e7d32;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+    flex-shrink:0;
+
+    transition:.25s;
+
+}
+
+.theme-btn:hover{
+
+    transform:rotate(20deg);
+
+}
+
+body.dark .theme-btn{
+
+    background:#374151;
+
+    color:white;
+
+}
+/* ==========================================
+   MAIN
+========================================== */
+
+main{
+
+    max-width:900px;
+
+    margin:40px auto;
+
+    padding:20px;
+
+}
+
+/* ==========================================
+   FORM CARD
+========================================== */
+
+.crop-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+body.dark .crop-card{
+
+    background:#1f2937;
+
+}
+
+.crop-card h2{
+
+    color:#2e7d32;
+
+    margin-bottom:20px;
+
+}
+
+body.dark .crop-card h2{
+
+    color:#81c784;
+
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+.form-group{
+
+    margin-bottom:18px;
+
+}
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:bold;
+
+}
+
+input,
+select{
+
+    width:100%;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    border:1px solid #ccc;
+
+    font-size:15px;
+
+}
+
+body.dark input,
+body.dark select{
+
+    background:#374151;
+
+    color:white;
+
+    border:1px solid #555;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:20px;
+
+    background:#2e7d32;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    transition:.25s;
+
+}
+
+button:hover{
+
+    background:#256728;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   RESULT CARD
+========================================== */
+
+.result-card{
+
+    margin-top:35px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+body.dark .result-card{
+
+    background:#1f2937;
+
+}
+
+.result-card h2{
+
+    color:#2e7d32;
+
+    margin-bottom:15px;
+
+}
+
+body.dark .result-card h2{
+
+    color:#81c784;
+
+}
+
+.result-item{
+
+    margin:10px 0;
+
+    font-size:16px;
+
+}
+
+.result-item strong{
+
+    color:#2e7d32;
+
+}
+
+body.dark .result-item strong{
+
+    color:#81c784;
+
+}
+
+/* ==========================================
+   BADGES
+========================================== */
+
+.crop-badge{
+
+    display:inline-block;
+
+    background:#2e7d32;
+
+    color:white;
+
+    padding:8px 16px;
+
+    margin:5px;
+
+    border-radius:25px;
+
+    font-size:15px;
+
+}
+
+body.dark .crop-badge{
+
+    background:#66bb6a;
+
+    color:black;
+
+}
+
+/* ==========================================
+   WARNING
+========================================== */
+
+.warning{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-left:5px solid orange;
+
+    background:#fff4d6;
+
+    border-radius:12px;
+
+}
+
+body.dark .warning{
+
+    background:#4b3c16;
+
+}
+
+/* ==========================================
+   SUCCESS
+========================================== */
+
+.success{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-left:5px solid green;
+
+    background:#e7ffe7;
+
+    border-radius:12px;
+
+}
+
+body.dark .success{
+
+    background:#1f3f1f;
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer{
+
+    margin-top:50px;
+
+    text-align:center;
+
+    padding:25px;
+
+    color:#666;
+
+}
+
+body.dark footer{
+
+    color:#aaa;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:768px){
+
+.topbar{
+
+    flex-direction:column;
+
+    gap:15px;
+
+    padding:20px;
+
+}
+
+.topbar h1{
+
+    order:1;
+
+    text-align:center;
+
+}
+
+.back-btn{
+
+    order:2;
+
+    width:100%;
+
+}
+
+.theme-btn{
+
+    order:3;
+
+}
+
+main{
+
+    margin:20px auto;
+
+    padding:15px;
+
+}
+
+.crop-card,
+.result-card{
+
+    padding:20px;
+
+}
+
+button{
+
+    font-size:16px;
+
+}
+
+}

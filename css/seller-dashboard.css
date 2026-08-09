@@ -1,0 +1,860 @@
+/* ==========================================
+   KISAN CONNECT
+   seller-dashboard.css
+========================================== */
+
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f8f4;
+    color: #1f2933;
+    line-height: 1.6;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+button {
+    font-family: inherit;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.seller-dashboard-header {
+    width: 100%;
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 6%;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e1e7df;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+
+.seller-dashboard-logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #287a3e;
+}
+
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.header-btn {
+    border: 1px solid #d7dfd5;
+    background: #ffffff;
+    color: #285b34;
+
+    padding: 9px 14px;
+
+    border-radius: 10px;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.header-btn:hover {
+    background: #edf7ee;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   MAIN PAGE
+========================================== */
+
+.seller-dashboard-page {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+
+    padding: 45px 0 60px;
+}
+
+
+/* ==========================================
+   WELCOME
+========================================== */
+
+.seller-welcome {
+    background: linear-gradient(
+        135deg,
+        #eaf7e9,
+        #f8fcf6
+    );
+
+    border: 1px solid #d7ead4;
+
+    border-radius: 20px;
+
+    padding: 35px 38px;
+
+    margin-bottom: 28px;
+}
+
+
+.welcome-label {
+    color: #36834a;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    margin-bottom: 5px;
+}
+
+
+.seller-welcome h1 {
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    line-height: 1.2;
+
+    color: #173b20;
+
+    margin-bottom: 10px;
+}
+
+
+.seller-welcome h1 span {
+    color: #2f873f;
+}
+
+
+.seller-welcome p:last-child {
+    color: #617066;
+    max-width: 650px;
+}
+
+
+/* ==========================================
+   COMMON SECTION HEADING
+========================================== */
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+
+.section-heading h2 {
+    font-size: 1.35rem;
+    color: #1d3d25;
+}
+
+
+.section-heading p {
+    margin-top: 4px;
+    color: #6c786f;
+    font-size: 0.95rem;
+}
+
+
+/* ==========================================
+   SELLER PROFILE
+========================================== */
+
+.seller-profile-card {
+    background: #ffffff;
+
+    border: 1px solid #e1e7df;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    margin-bottom: 28px;
+
+    box-shadow: 0 5px 20px rgba(35, 70, 40, 0.05);
+}
+
+
+.seller-profile {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+
+.seller-profile .info-box,
+.seller-profile > div {
+    background: #f7faf6;
+
+    border: 1px solid #e4ebe1;
+
+    border-radius: 12px;
+
+    padding: 16px;
+}
+
+
+.seller-profile span {
+    display: block;
+
+    color: #748078;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+
+.seller-profile strong {
+    display: block;
+
+    color: #243d2a;
+
+    word-break: break-word;
+}
+
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+.seller-statistics {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 35px;
+}
+
+
+.stat-card {
+    background: #ffffff;
+
+    border: 1px solid #e1e7df;
+
+    border-radius: 18px;
+
+    padding: 23px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    box-shadow: 0 5px 20px rgba(35, 70, 40, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.stat-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(35, 70, 40, 0.09);
+}
+
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 14px;
+
+    background: #edf7ed;
+
+    font-size: 1.45rem;
+
+    flex-shrink: 0;
+}
+
+
+.stat-card span {
+    display: block;
+
+    color: #738077;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+
+.stat-card strong {
+    display: block;
+
+    color: #1f3d27;
+
+    font-size: 1.45rem;
+
+    margin-top: 2px;
+}
+
+
+/* ==========================================
+   SELLER TOOLS
+========================================== */
+
+.seller-actions-section {
+    margin-bottom: 35px;
+}
+
+
+.seller-action-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+
+.seller-action-card {
+    background: #ffffff;
+
+    border: 1px solid #e1e7df;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    display: grid;
+
+    grid-template-columns:
+        auto 1fr auto;
+
+    align-items: center;
+
+    gap: 15px;
+
+    box-shadow: 0 5px 20px rgba(35, 70, 40, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.seller-action-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #9bc7a0;
+
+    box-shadow:
+        0 12px 28px rgba(35, 70, 40, 0.1);
+}
+
+
+.action-icon {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    background: #edf7ed;
+
+    border-radius: 13px;
+
+    font-size: 1.35rem;
+}
+
+
+.seller-action-card h3 {
+    color: #24472c;
+
+    font-size: 1.05rem;
+
+    margin-bottom: 3px;
+}
+
+
+.seller-action-card p {
+    color: #748078;
+
+    font-size: 0.85rem;
+
+    line-height: 1.45;
+}
+
+
+.action-arrow {
+    font-size: 1.4rem;
+
+    color: #3d8b4b;
+
+    font-weight: 700;
+
+    transition: transform 0.2s ease;
+}
+
+
+.seller-action-card:hover .action-arrow {
+    transform: translateX(4px);
+}
+
+
+/* ==========================================
+   INFORMATION CARDS
+========================================== */
+
+.seller-info-section {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 35px;
+}
+
+
+.info-card {
+    display: flex;
+
+    gap: 15px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e7df;
+
+    border-radius: 18px;
+
+    box-shadow: 0 5px 20px rgba(35, 70, 40, 0.05);
+}
+
+
+.info-icon {
+    width: 45px;
+    height: 45px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    background: #edf7ed;
+
+    border-radius: 12px;
+
+    font-size: 1.2rem;
+}
+
+
+.info-card h3 {
+    color: #27492e;
+
+    margin-bottom: 4px;
+
+    font-size: 1rem;
+}
+
+
+.info-card p {
+    color: #6f7c73;
+
+    font-size: 0.88rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   FOOTER BUTTON
+========================================== */
+
+.dashboard-footer {
+    display: flex;
+
+    justify-content: center;
+
+    padding-top: 5px;
+}
+
+
+.back-dashboard-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    border-radius: 11px;
+
+    background: #287a3e;
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.back-dashboard-btn:hover {
+    background: #216633;
+
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+body.dark {
+    background: #101710;
+    color: #e7eee8;
+}
+
+
+body.dark .seller-dashboard-header {
+    background: #172018;
+    border-color: #2b382d;
+}
+
+
+body.dark .seller-dashboard-logo {
+    color: #78c886;
+}
+
+
+body.dark .header-btn {
+    background: #1d281f;
+    border-color: #344236;
+    color: #d8e9db;
+}
+
+
+body.dark .header-btn:hover {
+    background: #26352a;
+}
+
+
+body.dark .seller-welcome {
+    background: linear-gradient(
+        135deg,
+        #18291b,
+        #172018
+    );
+
+    border-color: #304533;
+}
+
+
+body.dark .welcome-label {
+    color: #7fc88a;
+}
+
+
+body.dark .seller-welcome h1 {
+    color: #e6f1e8;
+}
+
+
+body.dark .seller-welcome h1 span {
+    color: #82cc8d;
+}
+
+
+body.dark .seller-welcome p:last-child {
+    color: #a7b5aa;
+}
+
+
+body.dark .section-heading h2 {
+    color: #e1ece3;
+}
+
+
+body.dark .section-heading p {
+    color: #9eaca1;
+}
+
+
+body.dark .seller-profile-card,
+body.dark .stat-card,
+body.dark .seller-action-card,
+body.dark .info-card {
+    background: #172018;
+
+    border-color: #2b382d;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+body.dark .seller-profile .info-box,
+body.dark .seller-profile > div {
+    background: #1d281f;
+    border-color: #344236;
+}
+
+
+body.dark .seller-profile span,
+body.dark .stat-card span,
+body.dark .seller-action-card p,
+body.dark .info-card p {
+    color: #9eaca1;
+}
+
+
+body.dark .seller-profile strong,
+body.dark .stat-card strong,
+body.dark .seller-action-card h3,
+body.dark .info-card h3 {
+    color: #e0ebe2;
+}
+
+
+body.dark .stat-icon,
+body.dark .action-icon,
+body.dark .info-icon {
+    background: #243526;
+}
+
+
+body.dark .seller-action-card:hover {
+    border-color: #52795a;
+}
+
+
+body.dark .action-arrow {
+    color: #82c98b;
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 900px) {
+
+    .seller-statistics {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+
+    .seller-action-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .seller-profile {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .seller-dashboard-header {
+        padding: 12px 4%;
+
+        min-height: 64px;
+    }
+
+
+    .seller-dashboard-logo {
+        font-size: 1.05rem;
+    }
+
+
+    .header-actions {
+        gap: 6px;
+    }
+
+
+    .header-btn {
+        padding: 8px 10px;
+
+        font-size: 0.8rem;
+    }
+
+
+    .seller-dashboard-page {
+        width: 92%;
+
+        padding-top: 25px;
+    }
+
+
+    .seller-welcome {
+        padding: 25px 21px;
+
+        border-radius: 16px;
+    }
+
+
+    .seller-welcome h1 {
+        font-size: 1.65rem;
+    }
+
+
+    .seller-profile-card {
+        padding: 21px;
+
+        border-radius: 16px;
+    }
+
+
+    .seller-profile {
+        grid-template-columns: 1fr;
+    }
+
+
+    .seller-statistics {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+
+    .stat-card {
+        padding: 18px;
+    }
+
+
+    .seller-action-card {
+        padding: 18px;
+
+        grid-template-columns:
+            auto 1fr auto;
+    }
+
+
+    .seller-info-section {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+
+    .info-card {
+        padding: 18px;
+    }
+
+
+    .section-heading h2 {
+        font-size: 1.2rem;
+    }
+
+}
+
+
+/* ==========================================
+   SMALL PHONES
+========================================== */
+
+@media (max-width: 420px) {
+
+    .seller-dashboard-header {
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+
+    .seller-dashboard-logo {
+        font-size: 0.95rem;
+    }
+
+
+    .header-actions {
+        flex-shrink: 0;
+    }
+
+
+    .header-btn {
+        font-size: 0.75rem;
+
+        padding: 7px 8px;
+    }
+
+
+    .seller-action-card {
+        grid-template-columns:
+            auto 1fr;
+    }
+
+
+    .action-arrow {
+        display: none;
+    }
+
+
+    .seller-welcome h1 {
+        font-size: 1.45rem;
+    }
+
+}
+
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid #72b97c;
+
+    outline-offset: 3px;
+}

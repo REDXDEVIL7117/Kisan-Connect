@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Irrigation Guide • Kisan Connect
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/irrigation.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- ==========================================
+         HEADER
+    ========================================== -->
+
+    <header class="topbar">
+
+        <a
+            href="smart-farming-dashboard.html"
+            class="back-btn"
+        >
+            ← Back
+        </a>
+
+        <h1>
+
+            💧 Irrigation Guide
+
+        </h1>
+
+        <button
+            id="themeBtn"
+            class="theme-btn"
+            type="button"
+        >
+            🌙
+        </button>
+
+    </header>
+
+
+    <!-- ==========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+        <h2>
+
+            Smart Irrigation Assistant
+
+        </h2>
+
+        <p>
+
+            Enter your farm details to receive
+            irrigation recommendations, watering
+            schedules, and water-saving advice.
+
+        </p>
+
+    </section>
+
+
+    <!-- ==========================================
+         MAIN CONTAINER
+    ========================================== -->
+
+    <main class="container">
+
+
+        <!-- ======================================
+             IRRIGATION FORM
+        ======================================= -->
+
+        <form
+            id="irrigationForm"
+            class="irrigation-form"
+        >
+
+            <!-- Crop -->
+
+            <div class="form-group">
+
+                <label for="crop">
+
+                    Crop
+
+                </label>
+
+                <select
+                    id="crop"
+                    required
+                >
+
+                    <option value="">
+                        Select Crop
+                    </option>
+
+                    <option>Wheat</option>
+                    <option>Rice</option>
+                    <option>Cotton</option>
+                    <option>Maize</option>
+                    <option>Mustard</option>
+                    <option>Soybean</option>
+                    <option>Bajra</option>
+                    <option>Gram</option>
+                    <option>Sugarcane</option>
+                    <option>Tomato</option>
+                    <option>Potato</option>
+                    <option>Onion</option>
+                    <option>Chilli</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Soil -->
+
+            <div class="form-group">
+
+                <label for="soil">
+
+                    Soil Type
+
+                </label>
+
+                <select
+                    id="soil"
+                    required
+                >
+
+                    <option value="">
+                        Select Soil Type
+                    </option>
+
+                    <option>Alluvial</option>
+                    <option>Black</option>
+                    <option>Red</option>
+                    <option>Laterite</option>
+                    <option>Loamy</option>
+                    <option>Sandy</option>
+                    <option>Clay</option>
+                    <option>Silty</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Season -->
+
+            <div class="form-group">
+
+                <label for="season">
+
+                    Season
+
+                </label>
+
+                <select
+                    id="season"
+                    required
+                >
+
+                    <option value="">
+                        Select Season
+                    </option>
+
+                    <option>Summer</option>
+                    <option>Winter</option>
+                    <option>Rainy</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Water Availability -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Water Availability
+
+                </label>
+
+                <div class="radio-group">
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="water"
+                            value="High"
+                            required
+                        >
+
+                        High
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="water"
+                            value="Medium"
+                        >
+
+                        Medium
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="water"
+                            value="Low"
+                        >
+
+                        Low
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- Farm Size -->
+
+            <div class="form-group">
+
+                <label for="farmSize">
+
+                    Farm Size (Acres)
+
+                </label>
+
+                <input
+                    type="number"
+                    id="farmSize"
+                    min="1"
+                    placeholder="Optional"
+                >
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="generate-btn"
+            >
+
+                💧 Generate Irrigation Plan
+
+            </button>
+
+        </form>
+
+
+
+        <!-- ======================================
+             RESULTS
+        ======================================= -->
+
+        <section
+            id="resultsSection"
+            class="results-section"
+        >
+
+            <div
+                id="irrigationResults"
+                class="results-card"
+            >
+
+                <div class="empty-results">
+
+                    💧
+
+                    <h2>
+
+                        No Irrigation Plan Yet
+
+                    </h2>
+
+                    <p>
+
+                        Fill in the form above and
+                        click
+                        <strong>
+                            Generate Irrigation Plan
+                        </strong>
+                        to receive recommendations.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <p>
+
+            © 2026 Kisan Connect
+
+        </p>
+
+    </footer>
+
+
+    <script src="js/irrigation.js"></script>
+
+</body>
+
+</html>

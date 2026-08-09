@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Kisan Connect • Weather Dashboard
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/weather.css">
+
+</head>
+
+<body>
+
+    <!-- ======================================
+     HEADER
+====================================== -->
+
+<header class="topbar">
+
+    <a
+        href="smart-farming-dashboard.html"
+        class="back-btn">
+
+        ← Back
+
+    </a>
+
+    <h1>
+
+        🌤 Weather Dashboard
+
+    </h1>
+
+    <div class="header-buttons">
+
+        <button
+            id="refreshWeatherBtn"
+            class="header-btn">
+
+            🔄 Refresh
+
+        </button>
+
+        <button
+            id="themeBtn"
+            class="header-btn">
+
+            🌙
+
+        </button>
+
+    </div>
+
+        </header>
+        
+    <!-- ======================================
+         CURRENT WEATHER
+    ======================================= -->
+
+    <section class="weather-card">
+
+        <div class="weather-top">
+
+            <div>
+
+                <h2>
+
+                    Current Weather
+
+                </h2>
+
+                <p
+                    id="location">
+
+                    📍 Loading...
+
+                </p>
+
+            </div>
+
+            <div
+                class="weather-icon"
+                id="weatherIcon">
+
+                ☀️
+
+            </div>
+
+        </div>
+
+
+        <div class="temperature">
+
+            <span
+                id="temperature">
+
+                30°C
+
+            </span>
+
+        </div>
+
+
+        <div class="weather-grid">
+
+            <div class="weather-item">
+
+                <h4>
+
+                    💧 Humidity
+
+                </h4>
+
+                <p id="humidity">
+
+                    0%
+
+                </p>
+
+            </div>
+
+
+            <div class="weather-item">
+
+                <h4>
+
+                    🌬 Wind
+
+                </h4>
+
+                <p id="windSpeed">
+
+                    0 km/h
+
+                </p>
+
+            </div>
+
+
+            <div class="weather-item">
+
+                <h4>
+
+                    🌧 Rain Chance
+
+                </h4>
+
+                <p id="rainChance">
+
+                    0%
+
+                </p>
+
+            </div>
+
+
+            <div class="weather-item">
+
+                <h4>
+
+                    🌡 Condition
+
+                </h4>
+
+                <p id="condition">
+
+                    Sunny
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p
+            class="updated-time">
+
+            Last Updated:
+            <span
+                id="lastUpdated">
+
+                --
+
+            </span>
+
+        </p>
+
+    </section>
+
+
+    <!-- ======================================
+         5 DAY FORECAST
+    ======================================= -->
+
+    <section class="forecast-section">
+
+        <h2>
+
+            📅 5-Day Forecast
+
+        </h2>
+
+        <div
+            class="forecast-container"
+            id="forecastContainer">
+
+            <!-- JS -->
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         FARMING ADVICE
+    ======================================= -->
+
+    <section class="advice-section">
+
+        <h2>
+
+            🌾 Farming Advice
+
+        </h2>
+
+        <div
+            id="farmingAdvice"
+            class="advice-card">
+
+            Loading advice...
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         WEATHER ALERTS
+    ======================================= -->
+
+    <section class="alerts-section">
+
+        <h2>
+
+            ⚠ Weather Alerts
+
+        </h2>
+
+        <div
+            id="weatherAlerts"
+            class="alert-card">
+
+            No active alerts.
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         QUICK ACTIONS
+    ======================================= -->
+
+    <section class="quick-actions">
+
+        <a
+            href="farmer-dashboard.html"
+            class="action-btn">
+
+            🏠 Dashboard
+
+        </a>
+
+        <a
+            href="marketplace.html"
+            class="action-btn">
+
+            🛒 Marketplace
+
+        </a>
+
+        <a
+            href="sell-product.html"
+            class="action-btn">
+
+            🌾 Sell Product
+
+        </a>
+
+    </section>
+
+
+    <!-- ======================================
+         FOOTER
+    ======================================= -->
+
+    <footer>
+
+        <p>
+
+            © 2026 Kisan Connect
+
+        </p>
+
+    </footer>
+
+
+    <script src="js/weather.js"></script>
+
+</body>
+
+</html>

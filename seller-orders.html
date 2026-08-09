@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Seller Orders | Kisan Connect</title>
+
+
+    <!-- ==========================================
+         SELLER ORDERS CSS
+    =========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/seller-orders.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="seller-orders-header">
+
+    <div class="seller-orders-logo">
+
+        🌾 Kisan Connect
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <a
+            href="seller-dashboard.html"
+            class="header-btn"
+        >
+
+            ← Seller Dashboard
+
+        </a>
+
+
+        <button
+            id="themeBtn"
+            class="header-btn"
+            type="button"
+            aria-label="Toggle dark mode"
+        >
+
+            🌙
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==========================================
+     MAIN CONTENT
+========================================== -->
+
+<main class="seller-orders-page">
+
+
+    <!-- ======================================
+         PAGE TITLE
+    ======================================= -->
+
+    <section class="seller-orders-title">
+
+        <h1>
+            📦 Seller Orders
+        </h1>
+
+
+        <p>
+            View orders containing your products.
+        </p>
+
+    </section>
+
+
+
+    <!-- ======================================
+         ORDER STATISTICS
+    ======================================= -->
+
+    <section class="seller-order-stats">
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                📋
+            </span>
+
+
+            <div>
+
+                <span class="stat-label">
+                    Total Orders
+                </span>
+
+
+                <strong id="totalOrders">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                🛒
+            </span>
+
+
+            <div>
+
+                <span class="stat-label">
+                    Products Ordered
+                </span>
+
+
+                <strong id="totalProducts">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                💰
+            </span>
+
+
+            <div>
+
+                <span class="stat-label">
+                    Sales Total
+                </span>
+
+
+                <strong id="salesTotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ======================================
+         ORDERS SECTION
+    ======================================= -->
+
+    <section class="seller-orders-section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Your Product Orders
+                </h2>
+
+
+                <p>
+                    Orders containing products
+                    listed by you.
+                </p>
+
+            </div>
+
+
+            <span
+                id="sellerOrderCount"
+                class="order-count"
+            >
+
+                0 orders
+
+            </span>
+
+        </div>
+
+
+
+        <!-- ==================================
+             ORDERS CONTAINER
+        =================================== -->
+
+        <div
+            id="sellerOrdersContainer"
+            class="seller-orders-container"
+        >
+
+            <!-- JavaScript loads seller orders here -->
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ======================================
+         EMPTY STATE
+    ======================================= -->
+
+    <section
+        id="emptySellerOrders"
+        class="empty-seller-orders"
+        hidden
+    >
+
+        <div class="empty-icon">
+            📦
+        </div>
+
+
+        <h2>
+            No Orders Yet
+        </h2>
+
+
+        <p>
+            You don't have any orders containing
+            your products yet.
+        </p>
+
+
+        <a
+            href="seller-dashboard.html"
+            class="back-dashboard-btn"
+        >
+
+            ← Back to Dashboard
+
+        </a>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+
+<script
+    src="js/seller-orders.js"
+></script>
+
+
+</body>
+
+</html>

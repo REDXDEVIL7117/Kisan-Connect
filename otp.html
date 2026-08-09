@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Kisan Connect - Verify Email</title>
+
+    <link rel="stylesheet"
+          href="css/otp.css">
+
+</head>
+
+<body>
+
+    <div class="otp-container">
+
+        <div class="otp-card">
+
+            <div class="logo">
+                🌾
+            </div>
+
+            <h1>Verify Your Email</h1>
+
+            <p class="subtitle">
+                We've sent a 6-digit verification code
+                to your email address.
+            </p>
+
+            <form id="otpForm">
+
+                <label for="otp">
+                    Enter OTP
+                </label>
+
+                <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    placeholder="Enter 6-digit OTP"
+                    maxlength="6"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    required
+                >
+
+                <button type="submit">
+                    Verify Email
+                </button>
+
+            </form>
+
+            <button
+                type="button"
+                id="resendBtn"
+                class="resend-btn"
+            >
+                Resend OTP
+            </button>
+
+            <p id="message"></p>
+
+            <p class="back-login">
+                Already verified?
+                <a href="login.html">
+                    Go to Login
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="js/otp.js"></script>
+
+</body>
+
+</html>

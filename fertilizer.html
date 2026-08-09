@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+
+        Fertilizer Guide • Kisan Connect
+
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/fertilizer.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- ==========================================
+         HEADER
+    ========================================== -->
+
+    <header class="topbar">
+
+        <a
+            href="smart-farming-dashboard.html"
+            class="back-btn"
+        >
+
+            ← Back
+
+        </a>
+
+        <h1>
+
+            🧪 Fertilizer Guide
+
+        </h1>
+
+        <button
+            id="themeBtn"
+            class="theme-btn"
+            type="button"
+        >
+
+            🌙
+
+        </button>
+
+    </header>
+
+
+    <!-- ==========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+        <h2>
+
+            Smart Fertilizer Assistant
+
+        </h2>
+
+        <p>
+
+            Get fertilizer recommendations,
+            application methods, dosage,
+            and organic alternatives for your crop.
+
+        </p>
+
+    </section>
+
+
+    <!-- ==========================================
+         MAIN CONTAINER
+    ========================================== -->
+
+    <main class="container">
+
+
+        <!-- ======================================
+             FERTILIZER FORM
+        ======================================= -->
+
+        <form
+            id="fertilizerForm"
+            class="fertilizer-form"
+        >
+
+            <!-- Crop -->
+
+            <div class="form-group">
+
+                <label for="crop">
+
+                    Crop
+
+                </label>
+
+                <select
+                    id="crop"
+                    required
+                >
+
+                    <option value="">
+
+                        Select Crop
+
+                    </option>
+
+                    <option>Wheat</option>
+                    <option>Rice</option>
+                    <option>Maize</option>
+                    <option>Cotton</option>
+                    <option>Mustard</option>
+                    <option>Soybean</option>
+                    <option>Gram</option>
+                    <option>Bajra</option>
+                    <option>Sugarcane</option>
+                    <option>Potato</option>
+                    <option>Tomato</option>
+                    <option>Onion</option>
+                    <option>Chilli</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Soil -->
+
+            <div class="form-group">
+
+                <label for="soil">
+
+                    Soil Type
+
+                </label>
+
+                <select
+                    id="soil"
+                    required
+                >
+
+                    <option value="">
+
+                        Select Soil Type
+
+                    </option>
+
+                    <option>Alluvial</option>
+                    <option>Black</option>
+                    <option>Red</option>
+                    <option>Laterite</option>
+                    <option>Loamy</option>
+                    <option>Sandy</option>
+                    <option>Clay</option>
+                    <option>Silty</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Season -->
+
+            <div class="form-group">
+
+                <label for="season">
+
+                    Season
+
+                </label>
+
+                <select
+                    id="season"
+                    required
+                >
+
+                    <option value="">
+
+                        Select Season
+
+                    </option>
+
+                    <option>Kharif</option>
+                    <option>Rabi</option>
+                    <option>Zaid</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Growth Stage -->
+
+            <div class="form-group">
+
+                <label for="growthStage">
+
+                    Crop Growth Stage
+
+                </label>
+
+                <select
+                    id="growthStage"
+                    required
+                >
+
+                    <option value="">
+
+                        Select Stage
+
+                    </option>
+
+                    <option>Sowing</option>
+                    <option>Seedling</option>
+                    <option>Vegetative</option>
+                    <option>Flowering</option>
+                    <option>Fruiting</option>
+                    <option>Harvest Ready</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Farm Size -->
+
+            <div class="form-group">
+
+                <label for="farmSize">
+
+                    Farm Size (Acres)
+
+                </label>
+
+                <input
+                    type="number"
+                    id="farmSize"
+                    min="1"
+                    placeholder="Optional"
+                >
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="generate-btn"
+            >
+
+                🧪 Generate Fertilizer Plan
+
+            </button>
+
+        </form>
+
+
+        <!-- ======================================
+             RESULTS
+        ======================================= -->
+
+        <section
+            id="resultsSection"
+            class="results-section"
+        >
+
+            <div
+                id="fertilizerResults"
+                class="results-card"
+            >
+
+                <div class="empty-results">
+
+                    🧪
+
+                    <h2>
+
+                        No Fertilizer Plan Yet
+
+                    </h2>
+
+                    <p>
+
+                        Fill in the form above and click
+
+                        <strong>
+
+                            Generate Fertilizer Plan
+
+                        </strong>
+
+                        to receive fertilizer recommendations.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <p>
+
+            © 2026 Kisan Connect
+
+        </p>
+
+    </footer>
+
+
+    <script src="js/fertilizer.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Products | Kisan Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/seller-products.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="seller-products-header">
+
+    <div class="seller-products-logo">
+        🌾 Kisan Connect
+    </div>
+
+
+    <div class="header-actions">
+
+        <a
+            href="seller-dashboard.html"
+            class="header-btn"
+        >
+            ← Dashboard
+        </a>
+
+
+        <button
+            id="themeBtn"
+            class="header-btn theme-btn"
+            type="button"
+        >
+            🌙
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==========================================
+     MAIN
+========================================== -->
+
+<main class="seller-products-page">
+
+
+    <!-- ======================================
+         PAGE INTRO
+    ======================================= -->
+
+    <section class="products-hero">
+
+        <div>
+
+            <span class="hero-label">
+                🛍️ Seller Center
+            </span>
+
+
+            <h1>
+                My Products
+            </h1>
+
+
+            <p>
+                Manage the products you have listed
+                on the Kisan Connect marketplace.
+            </p>
+
+        </div>
+
+
+        <a
+            href="sell-product.html"
+            class="add-product-btn"
+        >
+            ➕ Add Product
+        </a>
+
+    </section>
+
+
+
+    <!-- ======================================
+         SEARCH & FILTERS
+    ======================================= -->
+
+    <section class="products-controls">
+
+        <div class="search-box">
+
+            <span>
+                🔎
+            </span>
+
+            <input
+                type="search"
+                id="productSearch"
+                placeholder="Search your products..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <select id="categoryFilter">
+
+            <option value="All">
+                All Categories
+            </option>
+
+            <option value="Crops">
+                Crops
+            </option>
+
+            <option value="Tools">
+                Tools
+            </option>
+
+            <option value="Labour">
+                Labour
+            </option>
+
+            <option value="Fertilizers">
+                Fertilizers
+            </option>
+
+            <option value="Seeds">
+                Seeds
+            </option>
+
+            <option value="Irrigation">
+                Irrigation
+            </option>
+
+            <option value="Equipment">
+                Equipment
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+            <option value="Livestock">
+                Livestock
+            </option>
+
+        </select>
+
+    </section>
+
+
+
+    <!-- ======================================
+         PRODUCT COUNT
+    ======================================= -->
+
+    <section class="products-summary">
+
+        <div>
+
+            <strong id="productCount">
+                0
+            </strong>
+
+            <span>
+                My Listings
+            </span>
+
+        </div>
+
+
+        <button
+            id="clearFiltersBtn"
+            class="clear-filter-btn"
+            type="button"
+        >
+            Show All
+        </button>
+
+    </section>
+
+
+
+    <!-- ======================================
+         PRODUCTS
+    ======================================= -->
+
+    <section
+        id="sellerProductsContainer"
+        class="seller-products-grid"
+    >
+
+        <!-- JavaScript loads products here -->
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ==========================================
+     EDIT PRODUCT MODAL
+========================================== -->
+
+<div
+    id="editModal"
+    class="modal-overlay"
+    hidden
+>
+
+    <div class="edit-modal">
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-label">
+                    ✏️ Seller Product
+                </span>
+
+                <h2>
+                    Edit Listing
+                </h2>
+
+            </div>
+
+
+            <button
+                id="closeModalBtn"
+                class="close-modal-btn"
+                type="button"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <form id="editProductForm">
+
+
+            <input
+                type="hidden"
+                id="editProductId"
+            >
+
+
+            <label>
+                Product Name
+
+                <input
+                    type="text"
+                    id="editProductName"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Category
+
+                <select
+                    id="editCategory"
+                    required
+                >
+
+                    <option value="Crops">
+                        Crops
+                    </option>
+
+                    <option value="Tools">
+                        Tools
+                    </option>
+
+                    <option value="Labour">
+                        Labour
+                    </option>
+
+                    <option value="Fertilizers">
+                        Fertilizers
+                    </option>
+
+                    <option value="Seeds">
+                        Seeds
+                    </option>
+
+                    <option value="Irrigation">
+                        Irrigation
+                    </option>
+
+                    <option value="Equipment">
+                        Equipment
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                    <option value="Livestock">
+                        Livestock
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <div class="form-row">
+
+                <label>
+                    Price
+
+                    <input
+                        type="number"
+                        id="editPrice"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Quantity
+
+                    <input
+                        type="number"
+                        id="editQuantity"
+                        min="0"
+                        step="any"
+                        required
+                    >
+
+                </label>
+
+            </div>
+
+
+            <label>
+                Unit
+
+                <input
+                    type="text"
+                    id="editUnit"
+                    placeholder="kg, piece, litre..."
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Location
+
+                <input
+                    type="text"
+                    id="editLocation"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Description
+
+                <textarea
+                    id="editDescription"
+                    rows="5"
+                    required
+                ></textarea>
+
+            </label>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelEditBtn"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    💾 Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script src="js/seller-products.js"></script>
+
+</body>
+
+</html>

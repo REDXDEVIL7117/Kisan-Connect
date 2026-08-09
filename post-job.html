@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Post Job | Kisan Connect</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h2>🌾 Kisan Connect</h2>
+
+<a href="farmer-dashboard.html">
+
+<button id="logoutBtn">
+
+Back
+
+</button>
+
+</a>
+
+</header>
+
+<section class="welcome">
+
+<h1>Post a New Job</h1>
+
+<p>Create a labour requirement.</p>
+
+</section>
+
+<section class="dashboard-grid">
+
+<div class="card">
+
+<form id="jobForm">
+
+<label>Job Title</label><br><br>
+
+<input
+type="text"
+id="title"
+placeholder="Harvest Wheat"
+required>
+
+<br><br>
+
+<label>Location</label><br><br>
+
+<input
+type="text"
+id="location"
+placeholder="Jaipur"
+required>
+
+<br><br>
+
+<label>Workers Needed</label><br><br>
+
+<input
+type="number"
+id="workers"
+required>
+
+<br><br>
+
+<label>Pay Per Day (₹)</label><br><br>
+
+<input
+type="number"
+id="salary"
+required>
+
+<br><br>
+
+<label>Start Date</label><br><br>
+
+<input
+type="date"
+id="date"
+required>
+
+<br><br>
+
+<button class="signup-btn">
+
+Post Job
+
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+<script src="js/jobs.js"></script>
+
+</body>
+
+</html>

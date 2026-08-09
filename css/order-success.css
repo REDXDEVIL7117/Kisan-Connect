@@ -1,0 +1,1011 @@
+/* ==========================================
+   KISAN CONNECT
+   order-success.css
+   STAGE 4.6.2.2
+========================================== */
+
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f5f7f5;
+
+    color: #222;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.success-header {
+
+    min-height: 70px;
+
+    padding:
+        15px 6%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #ffffff;
+
+    border-bottom:
+        1px solid #e1e5e1;
+
+}
+
+
+.success-logo {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+}
+
+
+.header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.header-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding:
+        0 16px;
+
+    border-radius: 8px;
+
+    border:
+        1px solid #d9ded9;
+
+    background: #ffffff;
+
+    color: #222;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.header-btn:hover {
+
+    transform: translateY(-1px);
+
+    background: #f1f4f1;
+
+}
+
+
+/* ==========================================
+   MAIN PAGE
+========================================== */
+
+.success-page {
+
+    width: min(
+        100% - 30px,
+        1050px
+    );
+
+    margin:
+        40px auto 70px;
+
+}
+
+
+/* ==========================================
+   SUCCESS CARD
+========================================== */
+
+.success-card {
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding:
+        45px 25px;
+
+    border:
+        1px solid #e1e5e1;
+
+    box-shadow:
+        0 8px 30px rgba(
+            0,
+            0,
+            0,
+            0.06
+        );
+
+}
+
+
+.success-icon {
+
+    width: 82px;
+
+    height: 82px;
+
+    margin:
+        0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eaf7ed;
+
+    font-size: 42px;
+
+}
+
+
+.success-card h1 {
+
+    margin:
+        0 0 12px;
+
+    font-size: 34px;
+
+}
+
+
+.success-message {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #444;
+
+}
+
+
+.success-submessage {
+
+    margin:
+        10px 0 25px;
+
+    color: #666;
+
+}
+
+
+/* ==========================================
+   ORDER ID / DATE
+========================================== */
+
+.order-id-box,
+.order-date-box {
+
+    display: inline-flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 220px;
+
+    margin: 6px;
+
+    padding:
+        14px 20px;
+
+    border-radius: 10px;
+
+    background: #f6f8f6;
+
+}
+
+
+.order-id-box span,
+.order-date-box span {
+
+    font-size: 13px;
+
+    color: #666;
+
+}
+
+
+.order-id-box strong,
+.order-date-box strong {
+
+    font-size: 15px;
+
+    word-break: break-word;
+
+}
+
+
+/* ==========================================
+   SECTIONS
+========================================== */
+
+.confirmation-section {
+
+    margin-top: 25px;
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e1e5e1;
+
+    border-radius: 15px;
+
+}
+
+
+.section-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.section-heading h2 {
+
+    margin: 0;
+
+    font-size: 21px;
+
+}
+
+
+.section-heading span {
+
+    color: #666;
+
+    font-size: 14px;
+
+}
+
+
+/* ==========================================
+   CUSTOMER INFORMATION
+========================================== */
+
+.customer-info {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 15px;
+
+}
+
+
+.customer-info-item {
+
+    padding: 15px;
+
+    border:
+        1px solid #e1e5e1;
+
+    border-radius: 10px;
+
+    background: #fafbfa;
+
+}
+
+
+.customer-info-item span {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    color: #666;
+
+}
+
+
+.customer-info-item strong {
+
+    font-size: 15px;
+
+    word-break: break-word;
+
+}
+
+
+/* ==========================================
+   ORDERED ITEMS
+========================================== */
+
+.ordered-items {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+}
+
+
+.ordered-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    border:
+        1px solid #e1e5e1;
+
+    border-radius: 12px;
+
+    background: #fafbfa;
+
+}
+
+
+.ordered-item-image {
+
+    width: 80px;
+
+    height: 80px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    background: #eeeeee;
+
+}
+
+
+.ordered-item-placeholder {
+
+    width: 80px;
+
+    height: 80px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eeeeee;
+
+    font-size: 30px;
+
+}
+
+
+.ordered-item-info {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.ordered-item-info h3 {
+
+    margin:
+        0 0 7px;
+
+    font-size: 17px;
+
+}
+
+
+.ordered-item-info p {
+
+    margin:
+        4px 0;
+
+    color: #666;
+
+    font-size: 14px;
+
+}
+
+
+.ordered-item-price {
+
+    text-align: right;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+/* ==========================================
+   ORDER SUMMARY
+========================================== */
+
+.order-summary {
+
+    max-width: 650px;
+
+    margin: 0 auto;
+
+}
+
+
+.summary-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding:
+        10px 0;
+
+    color: #555;
+
+}
+
+
+.summary-row strong {
+
+    color: #222;
+
+}
+
+
+.order-summary hr {
+
+    border: 0;
+
+    border-top:
+        1px solid #e1e5e1;
+
+    margin:
+        12px 0;
+
+}
+
+
+.summary-total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-top: 8px;
+
+    font-size: 20px;
+
+}
+
+
+.summary-total strong {
+
+    font-size: 22px;
+
+}
+
+
+/* ==========================================
+   ORDER STATUS
+========================================== */
+
+.order-status-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: #f5f8f5;
+
+}
+
+
+.status-icon {
+
+    width: 55px;
+
+    height: 55px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    font-size: 27px;
+
+}
+
+
+.status-content h3 {
+
+    margin:
+        0 0 5px;
+
+}
+
+
+.status-content p {
+
+    margin:
+        0 0 5px;
+
+    font-weight: 700;
+
+}
+
+
+.status-content small {
+
+    color: #666;
+
+}
+
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.success-actions {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 30px;
+
+}
+
+
+.primary-action-btn,
+.secondary-action-btn {
+
+    min-height: 48px;
+
+    padding:
+        0 22px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.primary-action-btn {
+
+    background: #2e7d32;
+
+    color: #ffffff;
+
+}
+
+
+.primary-action-btn:hover {
+
+    transform: translateY(-2px);
+
+    background: #256b29;
+
+}
+
+
+.secondary-action-btn {
+
+    background: #ffffff;
+
+    color: #333;
+
+    border:
+        1px solid #d9ded9;
+
+}
+
+
+.secondary-action-btn:hover {
+
+    transform: translateY(-2px);
+
+    background: #f1f4f1;
+
+}
+
+
+/* ==========================================
+   EMPTY / ERROR
+========================================== */
+
+.empty-order {
+
+    padding: 35px 20px;
+
+    text-align: center;
+
+    color: #666;
+
+}
+
+
+.empty-order-icon {
+
+    font-size: 45px;
+
+    margin-bottom: 10px;
+
+}
+
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+body.dark {
+
+    background: #121512;
+
+    color: #eeeeee;
+
+}
+
+
+body.dark .success-header {
+
+    background: #1b1f1b;
+
+    border-color: #303630;
+
+}
+
+
+body.dark .header-btn {
+
+    background: #222722;
+
+    color: #eeeeee;
+
+    border-color: #3a403a;
+
+}
+
+
+body.dark .header-btn:hover {
+
+    background: #2c322c;
+
+}
+
+
+body.dark .success-card,
+body.dark .confirmation-section {
+
+    background: #1b1f1b;
+
+    border-color: #303630;
+
+}
+
+
+body.dark .success-message {
+
+    color: #dddddd;
+
+}
+
+
+body.dark .success-submessage,
+body.dark .section-heading span,
+body.dark .customer-info-item span,
+body.dark .ordered-item-info p,
+body.dark .summary-row {
+
+    color: #aaaaaa;
+
+}
+
+
+body.dark .order-id-box,
+body.dark .order-date-box,
+body.dark .customer-info-item,
+body.dark .ordered-item,
+body.dark .order-status-card {
+
+    background: #222722;
+
+    border-color: #343a34;
+
+}
+
+
+body.dark .order-id-box span {
+
+    color: #aaaaaa;
+
+}
+
+
+body.dark .summary-row strong,
+body.dark .summary-total strong {
+
+    color: #eeeeee;
+
+}
+
+
+body.dark .secondary-action-btn {
+
+    background: #1b1f1b;
+
+    color: #eeeeee;
+
+    border-color: #3a403a;
+
+}
+
+
+body.dark .secondary-action-btn:hover {
+
+    background: #282e28;
+
+}
+
+
+body.dark .status-icon {
+
+    background: #1b1f1b;
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .success-header {
+
+        padding:
+            14px 4%;
+
+    }
+
+
+    .success-logo {
+
+        font-size: 18px;
+
+    }
+
+
+    .header-actions {
+
+        gap: 6px;
+
+    }
+
+
+    .header-btn {
+
+        padding:
+            0 10px;
+
+        font-size: 12px;
+
+    }
+
+
+    .success-page {
+
+        width: min(
+            100% - 20px,
+            1050px
+        );
+
+        margin-top: 20px;
+
+    }
+
+
+    .success-card {
+
+        padding:
+            32px 15px;
+
+    }
+
+
+    .success-card h1 {
+
+        font-size: 27px;
+
+    }
+
+
+    .success-message {
+
+        font-size: 16px;
+
+    }
+
+
+    .order-id-box,
+    .order-date-box {
+
+        width: 100%;
+
+        margin:
+            5px 0;
+
+    }
+
+
+    .confirmation-section {
+
+        padding: 18px 15px;
+
+    }
+
+
+    .customer-info {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .ordered-item {
+
+        align-items: flex-start;
+
+    }
+
+
+    .ordered-item-image,
+    .ordered-item-placeholder {
+
+        width: 65px;
+
+        height: 65px;
+
+    }
+
+
+    .ordered-item-price {
+
+        font-size: 14px;
+
+    }
+
+
+    .order-status-card {
+
+        align-items: flex-start;
+
+    }
+
+
+    .success-actions {
+
+        flex-direction: column;
+
+    }
+
+
+    .primary-action-btn,
+    .secondary-action-btn {
+
+        width: 100%;
+
+    }
+
+}

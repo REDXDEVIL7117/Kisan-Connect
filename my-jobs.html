@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Jobs | Kisan Connect</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+<header>
+
+    <h2>🌾 Kisan Connect</h2>
+
+    <a href="farmer-dashboard.html">
+        <button id="logoutBtn">← Dashboard</button>
+    </a>
+
+</header>
+
+<section class="welcome">
+
+    <h1>My Jobs 📋</h1>
+
+    <p>Manage the labour jobs you have posted.</p>
+
+</section>
+
+<section class="jobs-section">
+
+    <div class="jobs-top">
+
+        <h2>Your Posted Jobs</h2>
+
+        <a href="post-job.html" class="dashboard-btn">
+    + Post New Job
+        </a>
+
+    </div>
+
+    <!-- JavaScript will put the jobs here -->
+    <div id="jobsContainer"></div>
+
+</section>
+
+<script src="js/jobs.js"></script>
+
+</body>
+
+</html>

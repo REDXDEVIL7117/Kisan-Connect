@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Confirmed | Kisan Connect</title>
+
+
+    <link
+        rel="stylesheet"
+        href="css/order-success.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="success-header">
+
+    <div class="success-logo">
+
+        🌾 Kisan Connect
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <a
+            href="marketplace.html"
+            class="header-btn"
+        >
+
+            🛒 Marketplace
+
+        </a>
+
+
+        <button
+            id="themeBtn"
+            class="header-btn"
+            type="button"
+        >
+
+            🌙
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==========================================
+     MAIN SUCCESS PAGE
+========================================== -->
+
+<main class="success-page">
+
+
+    <!-- ==========================================
+         SUCCESS MESSAGE
+    ========================================== -->
+
+    <section class="success-card">
+
+
+        <div class="success-icon">
+
+            ✅
+
+        </div>
+
+
+        <h1>
+            Order Confirmed!
+        </h1>
+
+
+        <p class="success-message">
+
+            Your order has been successfully placed.
+
+        </p>
+
+
+        <p class="success-submessage">
+
+            Thank you for shopping with Kisan Connect 🌾
+
+        </p>
+
+
+        <!-- ======================================
+             ORDER ID
+        ======================================= -->
+
+        <div class="order-id-box">
+
+            <span>
+                Order ID
+            </span>
+
+
+            <strong id="orderId">
+                Loading...
+            </strong>
+
+        </div>
+
+
+        <!-- ======================================
+             ORDER DATE
+        ======================================= -->
+
+        <div class="order-date-box">
+
+            <span>
+                Order Date
+            </span>
+
+
+            <strong id="orderDate">
+                Loading...
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         CUSTOMER / DELIVERY INFORMATION
+    ========================================== -->
+
+    <section class="confirmation-section">
+
+
+        <div class="section-heading">
+
+            <h2>
+                👤 Customer Information
+            </h2>
+
+        </div>
+
+
+        <div
+            id="customerInfo"
+            class="customer-info"
+        >
+
+            <!-- JavaScript loads customer information -->
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         ORDERED PRODUCTS
+    ========================================== -->
+
+    <section class="confirmation-section">
+
+
+        <div class="section-heading">
+
+            <h2>
+                📦 Ordered Products
+            </h2>
+
+
+            <span id="orderItemCount">
+                0 items
+            </span>
+
+        </div>
+
+
+        <div
+            id="orderedItems"
+            class="ordered-items"
+        >
+
+            <!-- JavaScript loads ordered products -->
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         ORDER SUMMARY
+    ========================================== -->
+
+    <section class="confirmation-section">
+
+
+        <div class="section-heading">
+
+            <h2>
+                🧾 Order Summary
+            </h2>
+
+        </div>
+
+
+        <div class="order-summary">
+
+
+            <div class="summary-row">
+
+                <span>
+                    Items
+                </span>
+
+
+                <strong id="summaryItemCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+
+                <strong id="orderSubtotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery
+                </span>
+
+
+                <strong id="orderDelivery">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Total Paid
+                </span>
+
+
+                <strong id="orderTotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         ORDER STATUS
+    ========================================== -->
+
+    <section class="confirmation-section">
+
+
+        <div class="order-status-card">
+
+
+            <div class="status-icon">
+                🚚
+            </div>
+
+
+            <div class="status-content">
+
+                <h3>
+                    Order Status
+                </h3>
+
+
+                <p id="orderStatus">
+                    Order Placed
+                </p>
+
+
+                <small>
+                    Your order information has been saved
+                    successfully.
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         ACTION BUTTONS
+    ========================================== -->
+
+    <section class="success-actions">
+
+
+        <a
+            href="marketplace.html"
+            class="primary-action-btn"
+        >
+
+            🛒 Continue Shopping
+
+        </a>
+
+
+        <a
+            href="orders.html"
+            class="secondary-action-btn"
+        >
+
+            📋 View My Orders
+
+        </a>
+
+
+        <a
+            href="farmer-dashboard.html"
+            class="secondary-action-btn"
+        >
+
+            🏠 Go to Dashboard
+
+        </a>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+
+<script
+    src="js/order-success.js"
+></script>
+
+
+</body>
+
+</html>

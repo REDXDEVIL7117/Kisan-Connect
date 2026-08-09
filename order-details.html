@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Details | Kisan Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/order-details.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="details-header">
+
+    <div class="details-logo">
+        🌾 Kisan Connect
+    </div>
+
+
+    <div class="header-actions">
+
+        <a
+            href="orders.html"
+            class="header-btn"
+        >
+            ← My Orders
+        </a>
+
+
+        <button
+            id="themeBtn"
+            class="header-btn"
+            type="button"
+        >
+            🌙
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main class="details-page">
+
+
+    <section class="details-title">
+
+        <h1>
+            📦 Order Details
+        </h1>
+
+        <p>
+            View complete information about your order.
+        </p>
+
+    </section>
+
+
+
+    <!-- ORDER HEADER -->
+
+    <section class="details-card order-overview">
+
+        <div>
+
+            <span>
+                Order ID
+            </span>
+
+            <h2 id="orderId">
+                Loading...
+            </h2>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Order Date
+            </span>
+
+            <strong id="orderDate">
+                Loading...
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Status
+            </span>
+
+            <strong
+                id="orderStatus"
+                class="status-badge"
+            >
+                Loading...
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CUSTOMER -->
+
+    <section class="details-card">
+
+        <h2>
+            👤 Customer Information
+        </h2>
+
+
+        <div
+            id="customerInfo"
+            class="details-grid"
+        >
+            Loading...
+        </div>
+
+    </section>
+
+
+
+    <!-- DELIVERY -->
+
+    <section class="details-card">
+
+        <h2>
+            📍 Delivery Information
+        </h2>
+
+
+        <div
+            id="deliveryInfo"
+            class="details-grid"
+        >
+            Loading...
+        </div>
+
+    </section>
+
+
+
+    <!-- PRODUCTS -->
+
+    <section class="details-card">
+
+        <div class="section-heading">
+
+            <h2>
+                🛒 Ordered Products
+            </h2>
+
+
+            <span id="itemCount">
+                0 items
+            </span>
+
+        </div>
+
+
+        <div
+            id="orderedItems"
+            class="ordered-items"
+        >
+            Loading...
+        </div>
+
+    </section>
+
+
+
+    <!-- SUMMARY -->
+
+    <section class="details-card">
+
+        <h2>
+            💰 Payment & Summary
+        </h2>
+
+
+        <div class="summary-row">
+
+            <span>
+                Payment Method
+            </span>
+
+            <strong id="paymentMethod">
+                Loading...
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Subtotal
+            </span>
+
+            <strong id="subtotal">
+                ₹0
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Delivery
+            </span>
+
+            <strong id="deliveryCharge">
+                Free
+            </strong>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="summary-total">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="total">
+                ₹0
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ACTIONS -->
+
+    <section class="details-actions">
+
+        <a
+            href="orders.html"
+            class="primary-btn"
+        >
+            ← Back to My Orders
+        </a>
+
+
+        <a
+            href="marketplace.html"
+            class="secondary-btn"
+        >
+            🛒 Continue Shopping
+        </a>
+
+    </section>
+
+
+</main>
+
+
+<script
+    src="js/order-details.js"
+></script>
+
+
+</body>
+
+</html>

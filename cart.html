@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Shopping Cart | Kisan Connect</title>
+
+
+    <link
+        rel="stylesheet"
+        href="css/cart.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="cart-header">
+
+    <div class="cart-logo">
+
+        🌾 Kisan Connect
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <a
+            href="marketplace.html"
+            class="header-btn"
+        >
+
+            ← Marketplace
+
+        </a>
+
+
+        <button
+            id="themeBtn"
+            class="header-btn"
+            type="button"
+        >
+
+            🌙
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==========================================
+     MAIN CART PAGE
+========================================== -->
+
+<main class="cart-page">
+
+
+    <!-- ==========================================
+         PAGE TITLE
+    ========================================== -->
+
+    <section class="cart-title-section">
+
+        <h1>
+            🛒 Your Cart
+        </h1>
+
+        <p>
+            Review your selected products before
+            continuing to checkout.
+        </p>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         CART LAYOUT
+    ========================================== -->
+
+    <section class="cart-layout">
+
+
+        <!-- ======================================
+             CART ITEMS
+        ======================================= -->
+
+        <div class="cart-items-section">
+
+
+            <div class="cart-section-header">
+
+                <h2>
+                    Cart Items
+                </h2>
+
+                <span id="cartItemCount">
+                    0 items
+                </span>
+
+            </div>
+
+
+            <!-- JavaScript loads cart items here -->
+
+            <div
+                id="cartItems"
+                class="cart-items"
+            >
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ======================================
+             CART SUMMARY
+        ======================================= -->
+
+        <aside class="cart-summary">
+
+
+            <h2>
+                Order Summary
+            </h2>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Items
+                </span>
+
+                <strong id="summaryItemCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong id="cartSubtotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery
+                </span>
+
+                <strong id="deliveryCharge">
+                    Calculated at checkout
+                </strong>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="cartTotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <button
+                id="checkoutBtn"
+                class="checkout-btn"
+                type="button"
+            >
+
+                Proceed to Checkout →
+
+            </button>
+
+
+            <a
+                href="marketplace.html"
+                class="continue-shopping-btn"
+            >
+
+                ← Continue Shopping
+
+            </a>
+
+
+        </aside>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+
+<script
+    src="js/cart.js"
+></script>
+
+
+</body>
+
+</html>

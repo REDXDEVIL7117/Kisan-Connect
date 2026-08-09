@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Labour Dashboard | Kisan Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/dashboard.css"
+    >
+
+</head>
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header>
+
+    <h2>🌾 Kisan Connect</h2>
+
+    <button id="logoutBtn">
+        Logout
+    </button>
+
+</header>
+
+
+<!-- ==========================================
+     WELCOME
+========================================== -->
+
+<section class="welcome">
+
+    <h1 id="welcomeTitle">
+        Welcome, Labourer! 👷
+    </h1>
+
+    <p>
+        Find work, manage your accepted jobs,
+        and build your labour profile.
+    </p>
+
+</section>
+
+
+<!-- ==========================================
+     DASHBOARD CARDS
+========================================== -->
+
+<section class="dashboard-grid">
+
+
+    <!-- VIEW JOBS -->
+
+    <div class="card">
+
+        <h2>🔎 View Available Jobs</h2>
+
+        <p>
+            Browse jobs posted by farmers and
+            sellers and accept work that suits you.
+        </p>
+
+        <a
+    href="view-jobs.html"
+    class="dashboard-btn"
+>
+    View Jobs
+          </a>
+
+    </div>
+
+
+
+    <!-- ENLIST -->
+
+    <div class="card">
+
+        <h2>📝 Enlist Yourself</h2>
+
+        <p>
+            Create your labour profile so farmers
+            and sellers can find you for work.
+        </p>
+
+        <a
+            href="enlist-labour.html"
+            class="dashboard-btn"
+        >
+            Enlist as Labour
+        </a>
+
+    </div>
+
+
+
+    <!-- MY WORK -->
+
+    <div class="card">
+
+        <h2>📋 My Work</h2>
+
+        <p>
+            View the jobs you have accepted and
+            keep track of your upcoming work.
+        </p>
+
+        <a
+            href="my-work.html"
+            class="dashboard-btn"
+        >
+            View My Work
+        </a>
+
+    </div>
+
+
+
+    <!-- MARKETPLACE -->
+
+    <div class="card">
+
+        <h2>🛒 Marketplace</h2>
+
+        <p>
+            Buy and sell farming tools, crops,
+            seeds, fertilizers and other products.
+        </p>
+
+        <a
+            href="marketplace.html"
+            class="dashboard-btn"
+        >
+            Open Marketplace
+        </a>
+
+    </div>
+
+
+</section>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+
+<script>
+
+    // Get logged-in user
+    const currentUser =
+        JSON.parse(
+            localStorage.getItem("currentUser")
+        );
+
+
+    // If not logged in, return to login
+    if (!currentUser) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    // Make sure only Labourers can access
+    if (
+        currentUser &&
+        currentUser.role !== "Labourer"
+    ) {
+
+        if (currentUser.role === "Farmer") {
+
+            window.location.href =
+                "farmer-dashboard.html";
+
+        }
+
+        else if (
+            currentUser.role === "Seller"
+        ) {
+
+            window.location.href =
+                "seller-dashboard.html";
+
+        }
+
+    }
+
+
+    // Welcome message
+    const welcomeTitle =
+        document.getElementById(
+            "welcomeTitle"
+        );
+
+    if (welcomeTitle && currentUser) {
+
+        welcomeTitle.textContent =
+            `Welcome, ${currentUser.name}! 👷`;
+
+    }
+
+
+    // Logout
+    const logoutBtn =
+        document.getElementById(
+            "logoutBtn"
+        );
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener(
+            "click",
+            () => {
+
+                localStorage.removeItem(
+                    "currentUser"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

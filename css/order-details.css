@@ -1,0 +1,662 @@
+/* ==========================================
+   KISAN CONNECT
+   order-details.css
+   STAGE 4.6.2.4
+========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f2;
+    color: #222;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.details-header {
+    width: 100%;
+    padding: 16px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e5df;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.details-logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid #d8ddd5;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.header-btn:hover {
+    background: #f0f5ed;
+    border-color: #4caf50;
+    color: #2e7d32;
+}
+
+
+/* ==========================================
+   PAGE
+========================================== */
+
+.details-page {
+    width: 92%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 0 70px;
+}
+
+.details-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.details-title h1 {
+    margin: 0 0 10px;
+    font-size: 36px;
+    color: #2e7d32;
+}
+
+.details-title p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+}
+
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.details-card {
+    background: #ffffff;
+    border: 1px solid #e1e5df;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+}
+
+.details-card h2 {
+    margin: 0 0 20px;
+    color: #2e7d32;
+    font-size: 21px;
+}
+
+
+/* ==========================================
+   ORDER HEADING
+========================================== */
+
+.order-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.order-heading span:first-child {
+    display: block;
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.order-heading h2 {
+    margin: 0;
+    color: #2e7d32;
+    font-size: 22px;
+}
+
+.status-badge {
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: #eef7ed;
+    color: #2e7d32;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* ==========================================
+   ORDER META
+========================================== */
+
+.order-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e8e2;
+}
+
+.order-meta div,
+.info-box {
+    padding: 14px;
+    background: #f7f9f5;
+    border: 1px solid #e4e8e1;
+    border-radius: 9px;
+}
+
+.order-meta span,
+.info-box span {
+    display: block;
+    margin-bottom: 6px;
+    color: #666;
+    font-size: 12px;
+}
+
+.order-meta strong,
+.info-box strong {
+    color: #222;
+    font-size: 15px;
+    word-break: break-word;
+}
+
+
+/* ==========================================
+   INFO GRID
+========================================== */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+
+/* ==========================================
+   PRODUCTS
+========================================== */
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-heading h2 {
+    margin: 0;
+}
+
+.section-heading > span {
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #eef7ed;
+    color: #2e7d32;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail-product {
+    display: grid;
+    grid-template-columns: 75px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 15px;
+    padding: 14px;
+    background: #fafbf9;
+    border: 1px solid #e4e8e1;
+    border-radius: 10px;
+}
+
+.product-image,
+.product-image-placeholder {
+    width: 75px;
+    height: 75px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.product-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef1ec;
+    font-size: 28px;
+}
+
+.product-info {
+    min-width: 0;
+}
+
+.product-info h3 {
+    margin: 0 0 7px;
+    color: #333;
+    font-size: 16px;
+}
+
+.product-info p {
+    margin: 4px 0;
+    color: #777;
+    font-size: 13px;
+}
+
+.product-total {
+    color: #2e7d32;
+    font-size: 17px;
+    white-space: nowrap;
+}
+
+
+/* ==========================================
+   SUMMARY
+========================================== */
+
+.summary {
+    max-width: 500px;
+    margin-left: auto;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 9px 0;
+    color: #666;
+}
+
+.summary-row strong {
+    color: #333;
+}
+
+.summary hr {
+    border: none;
+    border-top: 1px solid #e1e5df;
+    margin: 15px 0;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 19px;
+}
+
+.summary-total span {
+    font-weight: 700;
+}
+
+.summary-total strong {
+    color: #2e7d32;
+    font-size: 23px;
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.status-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.status-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #eef7ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.status-card h2 {
+    margin: 0 0 7px;
+}
+
+.status-card strong {
+    color: #2e7d32;
+}
+
+.status-card p {
+    margin: 6px 0 0;
+    color: #777;
+}
+
+
+/* ==========================================
+   ACTIONS
+========================================== */
+
+.details-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.primary-action,
+.secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.primary-action {
+    background: #2e7d32;
+    color: #ffffff;
+}
+
+.primary-action:hover {
+    background: #256628;
+}
+
+.secondary-action {
+    background: #ffffff;
+    color: #333;
+    border: 1px solid #d6ddd3;
+}
+
+.secondary-action:hover {
+    border-color: #4caf50;
+    color: #2e7d32;
+}
+
+
+/* ==========================================
+   LOADING / ERROR
+========================================== */
+
+.loading-box,
+.not-found-card,
+.empty-box {
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e1e5df;
+    border-radius: 14px;
+    padding: 55px 25px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+}
+
+.loading-icon,
+.not-found-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.loading-box h2,
+.not-found-card h2 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.loading-box p,
+.not-found-card p {
+    color: #777;
+}
+
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+body.dark {
+    background: #121712;
+    color: #eeeeee;
+}
+
+body.dark .details-header {
+    background: #1a211a;
+    border-bottom-color: #303830;
+}
+
+body.dark .details-logo,
+body.dark .details-title h1,
+body.dark .details-card h2 {
+    color: #81c784;
+}
+
+body.dark .header-btn {
+    background: #202820;
+    border-color: #394239;
+    color: #eeeeee;
+}
+
+body.dark .header-btn:hover {
+    background: #293329;
+    border-color: #66bb6a;
+    color: #a5d6a7;
+}
+
+body.dark .details-title p {
+    color: #a9b0a9;
+}
+
+body.dark .details-card,
+body.dark .loading-box,
+body.dark .not-found-card,
+body.dark .empty-box {
+    background: #1b221b;
+    border-color: #303830;
+}
+
+body.dark .order-heading span:first-child,
+body.dark .order-meta span,
+body.dark .info-box span {
+    color: #aeb6ae;
+}
+
+body.dark .order-heading h2 {
+    color: #81c784;
+}
+
+body.dark .status-badge,
+body.dark .section-heading > span {
+    background: #263326;
+    color: #a5d6a7;
+}
+
+body.dark .order-meta {
+    border-top-color: #343b34;
+}
+
+body.dark .order-meta div,
+body.dark .info-box {
+    background: #202820;
+    border-color: #343d34;
+}
+
+body.dark .order-meta strong,
+body.dark .info-box strong {
+    color: #eeeeee;
+}
+
+body.dark .detail-product {
+    background: #202720;
+    border-color: #343b34;
+}
+
+body.dark .product-image-placeholder {
+    background: #283028;
+}
+
+body.dark .product-info h3 {
+    color: #eeeeee;
+}
+
+body.dark .product-info p {
+    color: #a6aea6;
+}
+
+body.dark .product-total {
+    color: #81c784;
+}
+
+body.dark .summary-row {
+    color: #a8afa8;
+}
+
+body.dark .summary-row strong {
+    color: #eeeeee;
+}
+
+body.dark .summary hr {
+    border-top-color: #343b34;
+}
+
+body.dark .summary-total strong {
+    color: #81c784;
+}
+
+body.dark .status-icon {
+    background: #263326;
+}
+
+body.dark .status-card strong {
+    color: #81c784;
+}
+
+body.dark .status-card p {
+    color: #a6aea6;
+}
+
+body.dark .secondary-action {
+    background: #202820;
+    border-color: #3a433a;
+    color: #eeeeee;
+}
+
+body.dark .secondary-action:hover {
+    color: #a5d6a7;
+}
+
+body.dark .loading-box h2,
+body.dark .not-found-card h2 {
+    color: #eeeeee;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .details-header {
+        padding: 13px 4%;
+    }
+
+    .details-logo {
+        font-size: 18px;
+    }
+
+    .header-btn {
+        min-height: 38px;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .details-page {
+        width: 94%;
+        padding: 28px 0 50px;
+    }
+
+    .details-title h1 {
+        font-size: 29px;
+    }
+
+    .details-title p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .details-card {
+        padding: 19px;
+        border-radius: 11px;
+    }
+
+    .order-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .order-meta,
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-product {
+        grid-template-columns: 60px minmax(0, 1fr);
+    }
+
+    .product-image,
+    .product-image-placeholder {
+        width: 60px;
+        height: 60px;
+    }
+
+    .product-total {
+        grid-column: 2;
+    }
+
+    .details-actions {
+        flex-direction: column;
+    }
+
+    .primary-action,
+    .secondary-action {
+        width: 100%;
+    }
+
+    .status-card {
+        align-items: flex-start;
+    }
+
+}
