@@ -1,203 +1,216 @@
 /* ==========================================
-   KISAN CONNECT
+   🌾 KISAN CONNECT
    otp.js
 ========================================== */
 
-// ==========================================
-// OTP FORM
-// ==========================================
 
-const otpForm = document.getElementById("otpForm");
+/* ==========================================
+   API CONFIGURATION
+========================================== */
 
-const otpInput = document.getElementById("otp");
-
-const resendBtn = document.getElementById("resendBtn");
-
-const message = document.getElementById("message");
+const API_URL =
+    "http://localhost:3000";
 
 
-// ==========================================
-// HELPER: SHOW MESSAGE
-// ==========================================
+/* ==========================================
+   ELEMENTS
+========================================== */
 
-function showMessage(text, success = false) {
+const otpForm =
+    document.getElementById("otpForm");
+
+const otpInput =
+    document.getElementById("otp");
+
+const resendBtn =
+    document.getElementById("resendBtn");
+
+const message =
+    document.getElementById("message");
+
+const verifyBtn =
+    document.getElementById("verifyBtn");
+
+
+/* ==========================================
+   SHOW MESSAGE
+========================================== */
+
+function showMessage(
+    text,
+    success = false
+) {
 
     message.textContent = text;
 
-    if (success) {
-
-        message.style.color = "#2e7d32";
-
-    } else {
-
-        message.style.color = "#d32f2f";
-
-    }
-
+    message.style.color =
+        success
+            ? "#2e7d32"
+            : "#d32f2f";
 }
 
 
-// ==========================================
-// VERIFY OTP
-// ==========================================
+/* ==========================================
+   VERIFY OTP
+========================================== */
 
 if (otpForm) {
 
-    otpForm.addEventListener("submit", async function (e) {
+    otpForm.addEventListener(
+        "submit",
+        async function (e) {
 
-        e.preventDefault();
-
-        const otp = otpInput.value.trim();
-
-
-        // ------------------------------
-        // BASIC VALIDATION
-        // ------------------------------
-
-        if (!/^\d{6}$/.test(otp)) {
-
-            showMessage(
-                "Please enter a valid 6-digit OTP."
-            );
-
-            return;
-
-        }
+            e.preventDefault();
 
 
-        // ------------------------------
-        // DISABLE BUTTON
-        // ------------------------------
-
-        const verifyButton =
-            otpForm.querySelector("button");
-
-        verifyButton.disabled = true;
-
-        verifyButton.textContent =
-            "Verifying...";
+            const otp =
+                otpInput.value.trim();
 
 
-        // ------------------------------
-        // SEND OTP TO BACKEND
-        // ------------------------------
+            /* ==========================================
+               VALIDATE OTP
+            ========================================== */
 
-        try {
-
-            const response = await fetch(
-
-                "http://localhost:3000/api/signup/verify-otp",
-
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    credentials: "include",
-
-                    body: JSON.stringify({
-
-                        otp: otp
-
-                    })
-
-                }
-
-            );
-
-
-            const data =
-                await response.json();
-
-
-            // ------------------------------
-            // ERROR
-            // ------------------------------
-
-            if (!response.ok) {
+            if (!/^\d{6}$/.test(otp)) {
 
                 showMessage(
-                    data.error ||
-                    "OTP verification failed."
+                    "Please enter a valid 6-digit OTP."
                 );
-
-                verifyButton.disabled = false;
-
-                verifyButton.textContent =
-                    "Verify Email";
 
                 return;
-
             }
 
 
-            // ------------------------------
-            // SUCCESS
-            // ------------------------------
+            /* ==========================================
+               DISABLE BUTTON
+            ========================================== */
 
-            showMessage(
-                "🎉 Email verified! Account created successfully.",
-                true
-            );
+            verifyBtn.disabled = true;
+
+            verifyBtn.textContent =
+                "Verifying...";
 
 
-            // Save the newly created user
+            /* ==========================================
+               VERIFY WITH BACKEND
+            ========================================== */
 
-            if (data.user) {
+            try {
 
-                localStorage.setItem(
+                console.log(
+                    "📡 Sending OTP verification..."
+                );
 
-                    "currentUser",
 
-                    JSON.stringify(data.user)
+                const response =
+                    await fetch(
+                        `${API_URL}/api/signup/verify-otp`,
+                        {
 
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            credentials: "include",
+
+                            body: JSON.stringify({
+                                otp
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "📥 Verification status:",
+                    response.status
+                );
+
+
+                /* ==========================================
+                   ERROR
+                ========================================== */
+
+                if (!response.ok) {
+
+                    showMessage(
+                        data.error ||
+                        "OTP verification failed."
+                    );
+
+                    verifyBtn.disabled = false;
+
+                    verifyBtn.textContent =
+                        "Verify Email";
+
+                    return;
+                }
+
+
+                /* ==========================================
+                   SUCCESS
+                ========================================== */
+
+                showMessage(
+                    "🎉 Email verified! Account created successfully.",
+                    true
+                );
+
+
+                if (data.user) {
+
+                    localStorage.setItem(
+                        "currentUser",
+                        JSON.stringify(data.user)
+                    );
+                }
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "login.html";
+
+                    },
+                    1500
                 );
 
             }
 
+            catch (error) {
 
-            // Redirect to login
+                console.error(
+                    "❌ OTP verification error:",
+                    error
+                );
 
-            setTimeout(function () {
+                showMessage(
+                    "❌ Could not connect to Kisan Connect server."
+                );
 
-                window.location.href =
-                    "login.html";
+                verifyBtn.disabled = false;
 
-            }, 1500);
-
-
-        } catch (error) {
-
-            console.error(
-                "OTP verification error:",
-                error
-            );
-
-            showMessage(
-                "❌ Could not connect to Kisan Connect server."
-            );
-
-            verifyButton.disabled = false;
-
-            verifyButton.textContent =
-                "Verify Email";
+                verifyBtn.textContent =
+                    "Verify Email";
+            }
 
         }
-
-    });
+    );
 
 }
 
 
-// ==========================================
-// RESEND OTP
-// ==========================================
+/* ==========================================
+   RESEND OTP
+========================================== */
 
 if (resendBtn) {
 
@@ -213,26 +226,22 @@ if (resendBtn) {
 
             try {
 
-                const response = await fetch(
+                const response =
+                    await fetch(
+                        `${API_URL}/api/signup/resend-otp`,
+                        {
 
-                    "http://localhost:3000/api/signup/resend-otp",
+                            method: "POST",
 
-                    {
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
 
-                        method: "POST",
+                            credentials: "include"
 
-                        headers: {
-
-                            "Content-Type":
-                                "application/json"
-
-                        },
-
-                        credentials: "include"
-
-                    }
-
-                );
+                        }
+                    );
 
 
                 const data =
@@ -252,7 +261,6 @@ if (resendBtn) {
                         "Resend OTP";
 
                     return;
-
                 }
 
 
@@ -266,22 +274,28 @@ if (resendBtn) {
                     "OTP Sent ✓";
 
 
-                // Allow another resend after 30 seconds
+                /* ==========================================
+                   30 SECOND COOLDOWN
+                ========================================== */
 
-                setTimeout(function () {
+                setTimeout(
+                    function () {
 
-                    resendBtn.disabled = false;
+                        resendBtn.disabled = false;
 
-                    resendBtn.textContent =
-                        "Resend OTP";
+                        resendBtn.textContent =
+                            "Resend OTP";
 
-                }, 30000);
+                    },
+                    30000
+                );
 
+            }
 
-            } catch (error) {
+            catch (error) {
 
                 console.error(
-                    "Resend OTP error:",
+                    "❌ Resend OTP error:",
                     error
                 );
 
@@ -293,7 +307,6 @@ if (resendBtn) {
 
                 resendBtn.textContent =
                     "Resend OTP";
-
             }
 
         }

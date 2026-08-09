@@ -1,200 +1,265 @@
 /* ==========================================
-   KISAN CONNECT
+   🌾 KISAN CONNECT
    login.js
 ========================================== */
 
-// ==========================================
-// SIGNUP SYSTEM
-// ==========================================
 
-const signupForm = document.getElementById("signupForm");
+/* ==========================================
+   API CONFIGURATION
+========================================== */
+
+// LOCAL DEVELOPMENT
+const API_URL = "http://localhost:3000";
+
+// Later, when frontend is hosted:
+// const API_URL = "https://kisan-connect-backend.onrender.com";
+
+
+/* ==========================================
+   SIGNUP SYSTEM
+========================================== */
+
+const signupForm =
+    document.getElementById("signupForm");
+
 
 if (signupForm) {
 
-    signupForm.addEventListener("submit", async function (e) {
+    signupForm.addEventListener(
+        "submit",
+        async function (e) {
 
-        e.preventDefault();
+            // IMPORTANT:
+            // Stop the browser from refreshing
+            // the page before doing anything else.
+            e.preventDefault();
 
-        // ==========================================
-        // GET FORM VALUES
-        // ==========================================
-
-        const name =
-            document.getElementById("name").value.trim();
-
-        const phone =
-            document.getElementById("phone").value.trim();
-
-        const email =
-            document
-                .getElementById("email")
-                .value
-                .trim()
-                .toLowerCase();
-
-        const password =
-            document.getElementById("password").value;
-
-        const confirmPassword =
-            document.getElementById("confirmPassword").value;
-
-        const role =
-            document.getElementById("role").value;
-
-
-        // ==========================================
-        // VALIDATION
-        // ==========================================
-
-        if (
-            name === "" ||
-            phone === "" ||
-            email === "" ||
-            password === "" ||
-            confirmPassword === "" ||
-            role === ""
-        ) {
-
-            alert("Please fill all fields.");
-            return;
-
-        }
-
-
-        // Check phone number
-
-        if (
-            phone.length !== 10 ||
-            !/^\d{10}$/.test(phone)
-        ) {
-
-            alert(
-                "Phone number must contain exactly 10 digits."
-            );
-
-            return;
-
-        }
-
-
-        // Check password length
-
-        if (password.length < 6) {
-
-            alert(
-                "Password should be at least 6 characters."
-            );
-
-            return;
-
-        }
-
-
-        // Check password confirmation
-
-        if (password !== confirmPassword) {
-
-            alert(
-                "Passwords do not match."
-            );
-
-            return;
-
-        }
-
-
-        // ==========================================
-        // SEND SIGNUP REQUEST
-        // ==========================================
-
-        try {
-
-            const response = await fetch(
-
-                "http://localhost:3000/api/signup/request-otp",
-
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    credentials: "include",
-
-                    body: JSON.stringify({
-
-                        name: name,
-
-                        phone: phone,
-
-                        email: email,
-
-                        password: password,
-
-                        role: role
-
-                    })
-
-                }
-
+            console.log(
+                "🚀 SIGNUP SUBMIT FIRED"
             );
 
 
-            const data =
-                await response.json();
+            /* ==========================================
+               GET FORM VALUES
+            ========================================== */
+
+            const name =
+                document
+                    .getElementById("name")
+                    .value
+                    .trim();
+
+            const phone =
+                document
+                    .getElementById("phone")
+                    .value
+                    .trim();
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+            const confirmPassword =
+                document
+                    .getElementById("confirmPassword")
+                    .value;
+
+            const role =
+                document
+                    .getElementById("role")
+                    .value;
 
 
-            // ==========================================
-            // BACKEND ERROR
-            // ==========================================
+            /* ==========================================
+               VALIDATION
+            ========================================== */
 
-            if (!response.ok) {
+            if (
+                !name ||
+                !phone ||
+                !email ||
+                !password ||
+                !confirmPassword ||
+                !role
+            ) {
 
                 alert(
-                    data.error ||
-                    "Could not send verification code."
+                    "Please fill all fields."
                 );
 
                 return;
-
             }
 
 
-            // ==========================================
-            // OTP SENT
-            // ==========================================
+            // Phone validation
+            if (!/^\d{10}$/.test(phone)) {
 
-            alert(
-                "📧 Verification code sent to your email!"
-            );
+                alert(
+                    "Phone number must contain exactly 10 digits."
+                );
+
+                return;
+            }
 
 
-            // Go to OTP page
+            // Password validation
+            if (password.length < 6) {
 
-            window.location.href = "otp.html";
+                alert(
+                    "Password should be at least 6 characters."
+                );
 
+                return;
+            }
+
+
+            // Confirm password
+            if (password !== confirmPassword) {
+
+                alert(
+                    "Passwords do not match."
+                );
+
+                return;
+            }
+
+
+            /* ==========================================
+               DISABLE BUTTON
+            ========================================== */
+
+            const signupBtn =
+                document.getElementById("signupBtn");
+
+            signupBtn.disabled = true;
+
+            signupBtn.textContent =
+                "Sending OTP...";
+
+
+            /* ==========================================
+               SEND OTP REQUEST
+            ========================================== */
+
+            try {
+
+                console.log(
+                    "📡 Sending OTP request..."
+                );
+
+                console.log(
+                    "📡 API:",
+                    `${API_URL}/api/signup/request-otp`
+                );
+
+
+                const response =
+                    await fetch(
+                        `${API_URL}/api/signup/request-otp`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            credentials: "include",
+
+                            body: JSON.stringify({
+
+                                name,
+                                phone,
+                                email,
+                                password,
+                                role
+
+                            })
+                        }
+                    );
+
+
+                console.log(
+                    "📥 Backend status:",
+                    response.status
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                /* ==========================================
+                   BACKEND ERROR
+                ========================================== */
+
+                if (!response.ok) {
+
+                    console.error(
+                        "❌ Backend error:",
+                        data
+                    );
+
+                    alert(
+                        data.error ||
+                        "Could not send verification code."
+                    );
+
+                    signupBtn.disabled = false;
+
+                    signupBtn.textContent =
+                        "Create Account";
+
+                    return;
+                }
+
+
+                /* ==========================================
+                   OTP SENT
+                ========================================== */
+
+                console.log(
+                    "✅ OTP request successful"
+                );
+
+                alert(
+                    "📧 Verification code sent to your email!"
+                );
+
+
+                // Move to OTP page
+                window.location.href =
+                    "otp.html";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "❌ Signup request failed:",
+                    error
+                );
+
+                alert(
+                    "❌ Could not connect to Kisan Connect server."
+                );
+
+                signupBtn.disabled = false;
+
+                signupBtn.textContent =
+                    "Create Account";
+            }
 
         }
-
-        catch (error) {
-
-            console.error(
-                "Signup error:",
-                error
-            );
-
-            alert(
-                "❌ Could not connect to Kisan Connect server."
-            );
-
-        }
-
-    });
+    );
 
 }
 
@@ -204,12 +269,13 @@ console.log(
 );
 
 
-// ==========================================
-// LOGIN SYSTEM
-// ==========================================
+/* ==========================================
+   LOGIN SYSTEM
+========================================== */
 
 const loginForm =
     document.getElementById("loginForm");
+
 
 if (loginForm) {
 
@@ -220,9 +286,9 @@ if (loginForm) {
             e.preventDefault();
 
 
-            // ==========================================
-            // GET LOGIN VALUES
-            // ==========================================
+            /* ==========================================
+               GET LOGIN VALUES
+            ========================================== */
 
             const email =
                 document
@@ -237,56 +303,47 @@ if (loginForm) {
                     .value;
 
 
-            // ==========================================
-            // BASIC VALIDATION
-            // ==========================================
+            /* ==========================================
+               VALIDATION
+            ========================================== */
 
-            if (
-                email === "" ||
-                password === ""
-            ) {
+            if (!email || !password) {
 
                 alert(
                     "Please enter your email and password."
                 );
 
                 return;
-
             }
 
 
-            // ==========================================
-            // SEND LOGIN REQUEST
-            // ==========================================
+            /* ==========================================
+               LOGIN REQUEST
+            ========================================== */
 
             try {
 
                 const response =
                     await fetch(
-
-                        "http://localhost:3000/api/login",
-
+                        `${API_URL}/api/login`,
                         {
 
                             method: "POST",
 
                             headers: {
-
                                 "Content-Type":
                                     "application/json"
-
                             },
+
+                            credentials: "include",
 
                             body: JSON.stringify({
 
-                                email: email,
-
-                                password: password
+                                email,
+                                password
 
                             })
-
                         }
-
                     );
 
 
@@ -294,9 +351,9 @@ if (loginForm) {
                     await response.json();
 
 
-                // ==========================================
-                // LOGIN ERROR
-                // ==========================================
+                /* ==========================================
+                   LOGIN ERROR
+                ========================================== */
 
                 if (!response.ok) {
 
@@ -306,22 +363,16 @@ if (loginForm) {
                     );
 
                     return;
-
                 }
 
 
-                // ==========================================
-                // SAVE CURRENT USER
-                // ==========================================
+                /* ==========================================
+                   SAVE USER
+                ========================================== */
 
                 localStorage.setItem(
-
                     "currentUser",
-
-                    JSON.stringify(
-                        data.user
-                    )
-
+                    JSON.stringify(data.user)
                 );
 
 
@@ -332,9 +383,9 @@ if (loginForm) {
                 );
 
 
-                // ==========================================
-                // ROLE REDIRECT
-                // ==========================================
+                /* ==========================================
+                   ROLE REDIRECT
+                ========================================== */
 
                 if (
                     data.user.role ===
@@ -360,7 +411,6 @@ if (loginForm) {
 
                     window.location.href =
                         "seller-dashboard.html";
-
                 }
 
             }
@@ -368,14 +418,13 @@ if (loginForm) {
             catch (error) {
 
                 console.error(
-                    "Login error:",
+                    "❌ Login error:",
                     error
                 );
 
                 alert(
                     "❌ Could not connect to Kisan Connect server."
                 );
-
             }
 
         }

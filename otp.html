@@ -5,13 +5,19 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Kisan Connect - Verify Email</title>
+    <title>
+        Kisan Connect - Verify Email
+    </title>
 
-    <link rel="stylesheet"
-          href="css/otp.css">
+    <link
+        rel="stylesheet"
+        href="css/otp.css"
+    >
 
 </head>
 
@@ -25,12 +31,15 @@
                 🌾
             </div>
 
-            <h1>Verify Your Email</h1>
+            <h1>
+                Verify Your Email
+            </h1>
 
             <p class="subtitle">
-                We've sent a 6-digit verification code
-                to your email address.
+                We've sent a 6-digit verification
+                code to your email address.
             </p>
+
 
             <form id="otpForm">
 
@@ -44,16 +53,22 @@
                     name="otp"
                     placeholder="Enter 6-digit OTP"
                     maxlength="6"
+                    minlength="6"
                     inputmode="numeric"
                     autocomplete="one-time-code"
+                    pattern="[0-9]{6}"
                     required
                 >
 
-                <button type="submit">
+                <button
+                    type="submit"
+                    id="verifyBtn"
+                >
                     Verify Email
                 </button>
 
             </form>
+
 
             <button
                 type="button"
@@ -63,18 +78,24 @@
                 Resend OTP
             </button>
 
+
             <p id="message"></p>
 
+
             <p class="back-login">
+
                 Already verified?
+
                 <a href="login.html">
                     Go to Login
                 </a>
+
             </p>
 
         </div>
 
     </div>
+
 
     <script src="js/otp.js"></script>
 
