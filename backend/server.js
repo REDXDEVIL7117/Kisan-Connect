@@ -156,7 +156,13 @@ const db = mysql.createPool({
 const transporter =
     nodemailer.createTransport({
 
-        service: "gmail",
+        host: "smtp.gmail.com",
+
+        port: 587,
+
+        secure: false,
+
+        requireTLS: true,
 
         auth: {
 
@@ -165,9 +171,16 @@ const transporter =
 
             pass:
                 process.env.EMAIL_APP_PASSWORD
-        }
-    });
 
+        },
+
+        connectionTimeout: 15000,
+
+        greetingTimeout: 15000,
+
+        socketTimeout: 15000
+
+    });
 
 /* ==========================================
    DATABASE TEST
