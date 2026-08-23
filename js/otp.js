@@ -8,7 +8,7 @@
 ========================================== */
 
 // LIVE RENDER BACKEND
-const API_URL = "http://localhost:3000";
+const API_URL = "https://kisan-connect-backend.onrender.com";
 /* ==========================================
    ELEMENTS
 ========================================== */
