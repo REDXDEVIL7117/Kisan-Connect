@@ -23,15 +23,42 @@ async function createJobsTable() {
             salary DECIMAL(10,2) NOT NULL,
             start_date DATE NOT NULL,
             status VARCHAR(50) DEFAULT 'open',
+            accepted_by INT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
             FOREIGN KEY (farmer_id)
                 REFERENCES users(id)
-                ON DELETE CASCADE
+                ON DELETE CASCADE,
+
+            FOREIGN KEY (accepted_by)
+                REFERENCES users(id)
+                ON DELETE SET NULL
         )
     `);
 
-    console.log("✅ Jobs table created successfully!");
+    // Add accepted_by to an existing jobs table if the table
+    // was created by the older version of this script.
+    try {
+        await db.execute(`
+            ALTER TABLE jobs
+            ADD COLUMN accepted_by INT NULL
+        `);
+
+        await db.execute(`
+            ALTER TABLE jobs
+            ADD CONSTRAINT fk_jobs_accepted_by
+            FOREIGN KEY (accepted_by)
+            REFERENCES users(id)
+            ON DELETE SET NULL
+        `);
+
+        console.log("✅ Added accepted_by column to jobs table.");
+    } catch (error) {
+        // Column/constraint may already exist.
+        console.log("ℹ️ accepted_by already exists or migration was already applied.");
+    }
+
+    console.log("✅ Jobs table is ready!");
 
     await db.end();
 }
