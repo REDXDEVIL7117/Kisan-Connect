@@ -1,8 +1,10 @@
 /* ==========================================
-   KISAN CONNECT
+   🌾 KISAN CONNECT
    crop-recommendation.js
    STAGE 8.2
 ========================================== */
+
+"use strict";
 
 console.log("🌱 Crop Recommendation System Loaded.");
 
@@ -12,10 +14,10 @@ console.log("🌱 Crop Recommendation System Loaded.");
 // ==========================================
 
 const form =
-    document.getElementById("cropForm");
+    document.getElementById("recommendationForm");
 
 const resultBox =
-    document.getElementById("resultBox");
+    document.getElementById("recommendationResults");
 
 const themeBtn =
     document.getElementById("themeBtn");
@@ -25,41 +27,51 @@ const themeBtn =
 // DARK MODE
 // ==========================================
 
-if (localStorage.getItem("theme") === "dark") {
+function loadTheme() {
 
-    document.body.classList.add("dark");
+    if (localStorage.getItem("theme") === "dark") {
 
-    if (themeBtn) {
+        document.body.classList.add("dark");
 
-        themeBtn.textContent = "☀️";
-
-    }
-
-}
-
-if (themeBtn) {
-
-    themeBtn.addEventListener("click", () => {
-
-        document.body.classList.toggle("dark");
-
-        if (document.body.classList.contains("dark")) {
-
-            localStorage.setItem("theme", "dark");
+        if (themeBtn) {
 
             themeBtn.textContent = "☀️";
 
         }
 
-        else {
+    }
 
-            localStorage.setItem("theme", "light");
+}
 
-            themeBtn.textContent = "🌙";
+function toggleTheme() {
 
-        }
+    document.body.classList.toggle("dark");
 
-    });
+    const isDark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "theme",
+        isDark ? "dark" : "light"
+    );
+
+    if (themeBtn) {
+
+        themeBtn.textContent =
+            isDark ? "☀️" : "🌙";
+
+    }
+
+}
+
+loadTheme();
+
+if (themeBtn) {
+
+    themeBtn.addEventListener(
+        "click",
+        toggleTheme
+    );
 
 }
 
@@ -116,7 +128,6 @@ const cropDatabase = {
     },
 
 
-
     Punjab: {
 
         Kharif: {
@@ -156,7 +167,6 @@ const cropDatabase = {
         }
 
     },
-
 
 
     Maharashtra: {
@@ -208,38 +218,95 @@ const cropDatabase = {
 
 if (form) {
 
-    form.addEventListener("submit", function (e) {
+    form.addEventListener(
+        "submit",
+        function (e) {
 
-        e.preventDefault();
+            e.preventDefault();
 
-        const state =
-            document.getElementById("state").value;
+            console.log(
+                "🌱 Crop recommendation request submitted."
+            );
 
-        const season =
-            document.getElementById("season").value;
 
-        const soil =
-            document.getElementById("soil").value;
+            // ==========================================
+            // GET VALUES
+            // ==========================================
 
-        if (
-            !state ||
-            !season ||
-            !soil
-        ) {
+            const state =
+                document
+                    .getElementById("state")
+                    .value;
 
-            alert("Please fill all fields.");
+            const district =
+                document
+                    .getElementById("district")
+                    .value
+                    .trim();
 
-            return;
+            const soil =
+                document
+                    .getElementById("soilType")
+                    .value;
+
+            const season =
+                document
+                    .getElementById("season")
+                    .value;
+
+            const irrigation =
+                document
+                    .getElementById("irrigation")
+                    .value;
+
+            const farmSize =
+                document
+                    .getElementById("farmSize")
+                    .value;
+
+
+            // ==========================================
+            // VALIDATION
+            // ==========================================
+
+            if (
+                !state ||
+                !district ||
+                !soil ||
+                !season ||
+                !irrigation
+            ) {
+
+                alert(
+                    "Please fill all required fields."
+                );
+
+                return;
+
+            }
+
+
+            // ==========================================
+            // SHOW RECOMMENDATION
+            // ==========================================
+
+            showRecommendation(
+                state,
+                district,
+                season,
+                soil,
+                irrigation,
+                farmSize
+            );
 
         }
+    );
 
-        showRecommendation(
-            state,
-            season,
-            soil
-        );
+} else {
 
-    });
+    console.error(
+        "❌ Crop recommendation form was not found."
+    );
 
 }
 
@@ -250,9 +317,16 @@ if (form) {
 
 function showRecommendation(
     state,
+    district,
     season,
-    soil
+    soil,
+    irrigation,
+    farmSize
 ) {
+
+    // ==========================================
+    // CHECK DATABASE
+    // ==========================================
 
     if (
         !cropDatabase[state] ||
@@ -265,13 +339,36 @@ function showRecommendation(
             <div class="recommendation-card">
 
                 <h2>
-                    ⚠️ No Recommendation
+                    ⚠️ Recommendation Not Available
                 </h2>
 
                 <p>
 
-                    Recommendation database for
-                    this combination isn't available yet.
+                    Our recommendation database
+                    does not currently have data for:
+
+                </p>
+
+                <p>
+
+                    <strong>State:</strong>
+                    ${state}
+
+                    <br>
+
+                    <strong>Season:</strong>
+                    ${season}
+
+                    <br>
+
+                    <strong>Soil:</strong>
+                    ${soil}
+
+                </p>
+
+                <p>
+
+                    Please try another combination.
 
                 </p>
 
@@ -283,8 +380,28 @@ function showRecommendation(
 
     }
 
+
+    // ==========================================
+    // GET CROPS
+    // ==========================================
+
     const crops =
         cropDatabase[state][season][soil];
+
+
+    // ==========================================
+    // FARM SIZE TEXT
+    // ==========================================
+
+    const farmSizeText =
+        farmSize
+            ? `${farmSize} acre(s)`
+            : "Not specified";
+
+
+    // ==========================================
+    // DISPLAY RESULT
+    // ==========================================
 
     resultBox.innerHTML = `
 
@@ -304,12 +421,22 @@ function showRecommendation(
 
             <hr>
 
+
             <p>
 
                 <strong>State:</strong>
                 ${state}
 
             </p>
+
+
+            <p>
+
+                <strong>District:</strong>
+                ${district}
+
+            </p>
+
 
             <p>
 
@@ -318,6 +445,7 @@ function showRecommendation(
 
             </p>
 
+
             <p>
 
                 <strong>Soil:</strong>
@@ -325,13 +453,32 @@ function showRecommendation(
 
             </p>
 
+
+            <p>
+
+                <strong>Irrigation:</strong>
+                ${irrigation}
+
+            </p>
+
+
+            <p>
+
+                <strong>Farm Size:</strong>
+                ${farmSizeText}
+
+            </p>
+
+
             <br>
+
 
             <h3>
 
                 💡 Farming Tips
 
             </h3>
+
 
             <ul>
 
@@ -344,15 +491,18 @@ function showRecommendation(
                 </li>
 
                 <li>
-                    Apply fertilizer according to soil health.
+                    Apply fertilizer according
+                    to soil health.
                 </li>
 
                 <li>
-                    Monitor crops regularly for pests.
+                    Monitor crops regularly
+                    for pests.
                 </li>
 
                 <li>
-                    Irrigate according to crop requirement.
+                    Irrigate according to
+                    crop requirement.
                 </li>
 
             </ul>
@@ -361,4 +511,31 @@ function showRecommendation(
 
     `;
 
+
+    // ==========================================
+    // SCROLL TO RESULT
+    // ==========================================
+
+    resultBox.scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "start"
+
+    });
+
+
+    console.log(
+        "✅ Crop recommendation displayed."
+    );
+
 }
+
+
+// ==========================================
+// READY
+// ==========================================
+
+console.log(
+    "✅ Crop Recommendation System Ready."
+);

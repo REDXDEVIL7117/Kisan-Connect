@@ -3,14 +3,12 @@
    login.js
 ========================================== */
 
-
 /* ==========================================
    API CONFIGURATION
 ========================================== */
 
-// LOCAL DEVELOPMENT
+// LIVE RENDER BACKEND
 const API_URL = "http://localhost:3000";
-
 // Later, when frontend is hosted:
 // const API_URL = "https://kisan-connect-backend.onrender.com";
 
