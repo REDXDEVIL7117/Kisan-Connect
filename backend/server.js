@@ -225,13 +225,18 @@ async function testDatabase() {
 ========================================== */
 
 async function testEmail() {
-
     try {
+        console.log("📧 Testing Gmail SMTP connection...");
+        console.log("📧 Gmail user configured:", !!process.env.EMAIL_USER);
+        console.log(
+            "📧 Gmail app password configured:",
+            !!process.env.EMAIL_APP_PASSWORD
+        );
 
         await transporter.verify();
 
         console.log(
-            "📧 Gmail email system connected successfully!"
+            "✅ Gmail SMTP connection verified successfully!"
         );
 
         return true;
@@ -239,18 +244,42 @@ async function testEmail() {
     } catch (error) {
 
         console.error(
-            "❌ Gmail email system connection failed:"
+            "❌ Gmail SMTP connection FAILED!"
         );
 
         console.error(
+            "Error name:",
+            error.name
+        );
+
+        console.error(
+            "Error code:",
+            error.code
+        );
+
+        console.error(
+            "Error command:",
+            error.command
+        );
+
+        console.error(
+            "Error response:",
+            error.response
+        );
+
+        console.error(
+            "Error responseCode:",
+            error.responseCode
+        );
+
+        console.error(
+            "Error message:",
             error.message
         );
 
         return false;
     }
 }
-
-
 /* ==========================================
    HOME ROUTE
 ========================================== */
