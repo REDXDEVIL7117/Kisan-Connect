@@ -2,7 +2,16 @@
    🌾 KISAN CONNECT
    server.js
    Complete Backend Server
-   HTTPS EMAIL API VERSION
+
+   OTP FIX:
+   Pending signup data is stored in MySQL
+   instead of express-session memory.
+
+   Email:
+   Resend HTTPS API
+
+   Database:
+   Aiven MySQL
 ========================================== */
 
 const express = require("express");
@@ -10,6 +19,7 @@ const mysql = require("mysql2/promise");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const session = require("express-session");
+
 require("dotenv").config();
 
 const app = express();
@@ -25,7 +35,7 @@ const IS_PRODUCTION =
 
 
 /* ==========================================
-   FRONTEND / CORS CONFIGURATION
+   FRONTEND / CORS
 ========================================== */
 
 const allowedOrigins = [
@@ -34,6 +44,7 @@ const allowedOrigins = [
 ];
 
 if (process.env.FRONTEND_URL) {
+
     allowedOrigins.push(
         process.env.FRONTEND_URL.replace(/\/$/, "")
     );
@@ -41,9 +52,9 @@ if (process.env.FRONTEND_URL) {
 
 app.use(
     cors({
+
         origin: function (origin, callback) {
 
-            // Allow requests without an Origin.
             if (!origin) {
                 return callback(null, true);
             }
@@ -77,6 +88,8 @@ app.use(express.json());
 /* ==========================================
    SESSION
 ========================================== */
+
+app.set("trust proxy", 1);
 
 app.use(
     session({
@@ -130,6 +143,7 @@ const db = mysql.createPool({
         process.env.DB_NAME,
 
     ssl: {
+
         rejectUnauthorized: false
     },
 
@@ -142,32 +156,8 @@ const db = mysql.createPool({
 
 
 /* ==========================================
-   HTTPS EMAIL API
-   RESEND
+   RESEND HTTPS EMAIL API
 ========================================== */
-
-/*
-   IMPORTANT:
-
-   We are NOT using Gmail SMTP anymore.
-
-   Email is sent through Resend's HTTPS API.
-
-   Required Render environment variables:
-
-   RESEND_API_KEY
-   EMAIL_FROM
-
-   Example:
-
-   RESEND_API_KEY=re_xxxxxxxxxxxxxxxxx
-
-   EMAIL_FROM=Kisan Connect <onboarding@resend.dev>
-
-   IMPORTANT:
-   For production/custom sending addresses,
-   use a sender/domain verified in Resend.
-*/
 
 async function sendEmail({
     to,
@@ -183,73 +173,71 @@ async function sendEmail({
         );
     }
 
-    if (!process.env.EMAIL_FROM) {
+    if (!process.env.RESEND_FROM_EMAIL) {
 
         throw new Error(
-            "EMAIL_FROM is not configured"
+            "RESEND_FROM_EMAIL is not configured"
         );
     }
-
 
     console.log(
         `📧 Sending email through HTTPS API to ${to}...`
     );
 
+    const response =
+        await fetch(
+            "https://api.resend.com/emails",
+            {
 
-    const response = await fetch(
-        "https://api.resend.com/emails",
-        {
-            method: "POST",
+                method: "POST",
 
-            headers: {
+                headers: {
 
-                "Authorization":
-                    `Bearer ${process.env.RESEND_API_KEY}`,
+                    "Authorization":
+                        `Bearer ${process.env.RESEND_API_KEY}`,
 
-                "Content-Type":
-                    "application/json"
-            },
+                    "Content-Type":
+                        "application/json"
+                },
 
-            body: JSON.stringify({
+                body:
+                    JSON.stringify({
 
-                from:
-                    process.env.EMAIL_FROM,
+                        from:
+                            process.env.RESEND_FROM_EMAIL,
 
-                to: [
-                    to
-                ],
+                        to:
+                            [to],
 
-                subject:
-                    subject,
+                        subject:
+                            subject,
 
-                text:
-                    text,
+                        text:
+                            text,
 
-                html:
-                    html
-            })
-        }
-    );
-
+                        html:
+                            html
+                    })
+            }
+        );
 
     const responseText =
         await response.text();
 
-
-    let data = {};
+    let responseData;
 
     try {
 
-        data =
-            responseText
-                ? JSON.parse(responseText)
-                : {};
+        responseData =
+            JSON.parse(responseText);
 
     } catch {
 
-        data = {
-            raw: responseText
-        };
+        responseData =
+            {
+                raw:
+                    responseText
+            };
     }
 
 
@@ -266,73 +254,26 @@ async function sendEmail({
 
         console.error(
             "Response:",
-            data
+            responseData
         );
 
         throw new Error(
-            data?.message ||
-            data?.error ||
-            `Email API returned HTTP ${response.status}`
+            responseData?.message ||
+            "Email API request failed"
         );
     }
 
 
     console.log(
-        "✅ Email API accepted the message"
-    );
-
-    if (data.id) {
-
-        console.log(
-            "📨 Email ID:",
-            data.id
-        );
-    }
-
-
-    return data;
-}
-
-
-/* ==========================================
-   EMAIL SYSTEM TEST
-========================================== */
-
-async function testEmail() {
-
-    console.log(
-        "📧 Testing HTTPS email configuration..."
+        "✅ Email sent successfully through Resend"
     );
 
     console.log(
-        "📧 Resend API key configured:",
-        !!process.env.RESEND_API_KEY
+        "📨 Resend response:",
+        responseData
     );
 
-    console.log(
-        "📧 Email sender configured:",
-        !!process.env.EMAIL_FROM
-    );
-
-
-    if (
-        !process.env.RESEND_API_KEY ||
-        !process.env.EMAIL_FROM
-    ) {
-
-        console.error(
-            "❌ Email system is NOT configured!"
-        );
-
-        return false;
-    }
-
-
-    console.log(
-        "✅ HTTPS email configuration looks ready."
-    );
-
-    return true;
+    return responseData;
 }
 
 
@@ -375,27 +316,71 @@ async function testDatabase() {
 
 
 /* ==========================================
+   EMAIL CONFIGURATION TEST
+========================================== */
+
+async function testEmail() {
+
+    console.log(
+        "📧 Testing HTTPS email configuration..."
+    );
+
+    console.log(
+        "📧 Resend API key configured:",
+        !!process.env.RESEND_API_KEY
+    );
+
+    console.log(
+        "📧 Email sender configured:",
+        !!process.env.RESEND_FROM_EMAIL
+    );
+
+
+    if (
+        process.env.RESEND_API_KEY &&
+        process.env.RESEND_FROM_EMAIL
+    ) {
+
+        console.log(
+            "✅ HTTPS email configuration looks ready."
+        );
+
+        return true;
+    }
+
+
+    console.error(
+        "❌ Resend email configuration is incomplete."
+    );
+
+    return false;
+}
+
+
+/* ==========================================
    HOME ROUTE
 ========================================== */
 
-app.get("/", (req, res) => {
+app.get(
+    "/",
+    (req, res) => {
 
-    res.json({
+        res.json({
 
-        status:
-            "online",
+            status:
+                "online",
 
-        message:
-            "🌾 Kisan Connect Backend is working!",
+            message:
+                "🌾 Kisan Connect Backend is working!",
 
-        environment:
-            IS_PRODUCTION
-                ? "production"
-                : "development"
+            environment:
+                IS_PRODUCTION
+                    ? "production"
+                    : "development"
+        });
 
-    });
-
-});
+    }
+);
 
 
 /* ==========================================
@@ -422,7 +407,7 @@ app.get(
 
                 email:
                     process.env.RESEND_API_KEY &&
-                    process.env.EMAIL_FROM
+                    process.env.RESEND_FROM_EMAIL
                         ? "configured"
                         : "not configured"
 
@@ -441,10 +426,89 @@ app.get(
                     "unhealthy",
 
                 database:
-                    "failed",
+                    "failed"
 
-                email:
-                    "unknown"
+            });
+        }
+    }
+);
+
+
+/* ==========================================
+   TEMPORARY OTP TABLE SETUP
+==========================================
+
+   USE THIS ONCE.
+
+   After the table has been created successfully,
+   REMOVE THIS ROUTE FROM server.js.
+========================================== */
+
+app.post(
+    "/api/admin/setup-otp-table",
+    async (req, res) => {
+
+        try {
+
+            console.log(
+                "🛠️ Creating pending_signups table..."
+            );
+
+            await db.query(`
+
+                CREATE TABLE IF NOT EXISTS pending_signups (
+
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+
+                    name VARCHAR(255) NOT NULL,
+
+                    phone VARCHAR(20) NOT NULL,
+
+                    email VARCHAR(255) NOT NULL UNIQUE,
+
+                    password VARCHAR(255) NOT NULL,
+
+                    role VARCHAR(50) NOT NULL,
+
+                    otp VARCHAR(6) NOT NULL,
+
+                    otp_expires BIGINT NOT NULL,
+
+                    created_at TIMESTAMP
+                        DEFAULT CURRENT_TIMESTAMP
+
+                )
+
+            `);
+
+            console.log(
+                "✅ pending_signups table is ready!"
+            );
+
+            return res.json({
+
+                success:
+                    true,
+
+                message:
+                    "pending_signups table created successfully."
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "❌ Could not create OTP table:",
+                error.message
+            );
+
+            return res.status(500).json({
+
+                success:
+                    false,
+
+                error:
+                    error.message
 
             });
         }
@@ -463,8 +527,8 @@ app.get(
         try {
 
             const [users] =
-                await db.query(
-                    `
+                await db.query(`
+
                     SELECT
                         id,
                         name,
@@ -472,10 +536,12 @@ app.get(
                         email,
                         role,
                         created_at
+
                     FROM users
+
                     ORDER BY id DESC
-                    `
-                );
+
+                `);
 
             res.json(users);
 
@@ -512,9 +578,9 @@ app.post(
             );
 
 
-            /* ==========================================
+            /* --------------------------------------
                GET DATA
-            ========================================== */
+            -------------------------------------- */
 
             const {
                 name,
@@ -525,9 +591,9 @@ app.post(
             } = req.body;
 
 
-            /* ==========================================
+            /* --------------------------------------
                BASIC VALIDATION
-            ========================================== */
+            -------------------------------------- */
 
             if (
                 !name ||
@@ -546,9 +612,9 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                PHONE VALIDATION
-            ========================================== */
+            -------------------------------------- */
 
             if (
                 !/^\d{10}$/.test(
@@ -565,9 +631,9 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                PASSWORD VALIDATION
-            ========================================== */
+            -------------------------------------- */
 
             if (
                 String(password).length < 6
@@ -582,9 +648,9 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                NORMALIZE EMAIL
-            ========================================== */
+            -------------------------------------- */
 
             const normalizedEmail =
                 String(email)
@@ -592,14 +658,18 @@ app.post(
                     .toLowerCase();
 
 
-            /* ==========================================
+            /* --------------------------------------
                VALID ROLES
-            ========================================== */
+            -------------------------------------- */
 
             const allowedRoles = [
+
                 "Farmer",
+
                 "Labourer",
+
                 "Seller"
+
             ];
 
             if (
@@ -615,20 +685,24 @@ app.post(
             }
 
 
-            /* ==========================================
-               CHECK EMAIL
-            ========================================== */
+            /* --------------------------------------
+               CHECK EXISTING USER EMAIL
+            -------------------------------------- */
 
             const [existingEmail] =
-                await db.query(
-                    `
+                await db.query(`
+
                     SELECT id
+
                     FROM users
+
                     WHERE email = ?
+
                     LIMIT 1
-                    `,
-                    [normalizedEmail]
-                );
+
+                `, [
+                    normalizedEmail
+                ]);
 
 
             if (
@@ -644,20 +718,24 @@ app.post(
             }
 
 
-            /* ==========================================
-               CHECK PHONE
-            ========================================== */
+            /* --------------------------------------
+               CHECK EXISTING USER PHONE
+            -------------------------------------- */
 
             const [existingPhone] =
-                await db.query(
-                    `
+                await db.query(`
+
                     SELECT id
+
                     FROM users
+
                     WHERE phone = ?
+
                     LIMIT 1
-                    `,
-                    [phone]
-                );
+
+                `, [
+                    phone
+                ]);
 
 
             if (
@@ -673,9 +751,9 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                GENERATE OTP
-            ========================================== */
+            -------------------------------------- */
 
             const otp =
                 Math.floor(
@@ -689,9 +767,9 @@ app.post(
                 5 * 60 * 1000;
 
 
-            /* ==========================================
+            /* --------------------------------------
                HASH PASSWORD
-            ========================================== */
+            -------------------------------------- */
 
             const hashedPassword =
                 await bcrypt.hash(
@@ -700,61 +778,68 @@ app.post(
                 );
 
 
-            /* ==========================================
-               SAVE PENDING SIGNUP
-========================================== */
+            /* --------------------------------------
+               DELETE OLD PENDING SIGNUP
+            -------------------------------------- */
 
-            req.session.pendingSignup = {
+            await db.query(`
 
-                name:
-                    String(name).trim(),
+                DELETE FROM pending_signups
 
-                phone:
-                    String(phone),
+                WHERE email = ?
 
-                email:
-                    normalizedEmail,
+            `, [
+                normalizedEmail
+            ]);
 
-                password:
-                    hashedPassword,
 
-                role:
+            /* --------------------------------------
+               SAVE PENDING SIGNUP IN MYSQL
+            -------------------------------------- */
+
+            await db.query(`
+
+                INSERT INTO pending_signups
+
+                (
+                    name,
+                    phone,
+                    email,
+                    password,
                     role,
-
-                otp:
                     otp,
+                    otp_expires
+                )
 
-                otpExpires:
-                    otpExpires
-            };
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+
+            `, [
+
+                String(name).trim(),
+
+                String(phone),
+
+                normalizedEmail,
+
+                hashedPassword,
+
+                role,
+
+                otp,
+
+                otpExpires
+
+            ]);
 
 
-            /* ==========================================
-               SAVE SESSION FIRST
-            ========================================== */
-
-            await new Promise(
-                (resolve, reject) => {
-
-                    req.session.save(
-                        (error) => {
-
-                            if (error) {
-                                reject(error);
-                            } else {
-                                resolve();
-                            }
-
-                        }
-                    );
-
-                }
+            console.log(
+                `💾 Pending signup saved for ${normalizedEmail}`
             );
 
 
-            /* ==========================================
-               SEND VERIFICATION EMAIL
-========================================== */
+            /* --------------------------------------
+               SEND OTP
+            -------------------------------------- */
 
             await sendEmail({
 
@@ -767,25 +852,19 @@ app.post(
                 text:
                     `Your Kisan Connect verification code is ${otp}. This code expires in 5 minutes.`,
 
-                html:
-                    `
+                html: `
+
                     <div style="
                         font-family: Arial, sans-serif;
                         max-width: 600px;
                         margin: auto;
                         padding: 30px;
                         text-align: center;
-                        border: 1px solid #ddd;
-                        border-radius: 12px;
                     ">
 
                         <h2>
                             🌾 Kisan Connect
                         </h2>
-
-                        <p>
-                            Hello ${String(name).trim()},
-                        </p>
 
                         <p>
                             Your email verification code is:
@@ -803,22 +882,16 @@ app.post(
                             <strong>5 minutes</strong>.
                         </p>
 
-                        <p style="
-                            color: #666;
-                            font-size: 13px;
-                        ">
-                            If you did not request this code,
-                            you can safely ignore this email.
+                        <p>
+                            If you did not request
+                            this code, ignore this email.
                         </p>
 
                     </div>
-                    `
+
+                `
             });
 
-
-            /* ==========================================
-               SUCCESS
-========================================== */
 
             console.log(
                 `📧 OTP sent successfully to ${normalizedEmail}`
@@ -846,23 +919,6 @@ app.post(
             );
 
 
-            /* ==========================================
-               CLEAN PENDING SESSION ON FAILURE
-========================================== */
-
-            if (
-                req.session &&
-                req.session.pendingSignup
-            ) {
-
-                delete req.session.pendingSignup;
-
-                req.session.save(
-                    () => {}
-                );
-            }
-
-
             return res.status(500).json({
 
                 error:
@@ -884,32 +940,15 @@ app.post(
 
         try {
 
-            const { otp } =
-                req.body;
+            const {
+                otp,
+                email
+            } = req.body;
 
 
-            const pendingSignup =
-                req.session.pendingSignup;
-
-
-            /* ==========================================
-               CHECK SESSION
-========================================== */
-
-            if (!pendingSignup) {
-
-                return res.status(400).json({
-
-                    error:
-                        "No active signup verification found. Please request a new OTP."
-
-                });
-            }
-
-
-            /* ==========================================
-               OTP FORMAT
-========================================== */
+            /* --------------------------------------
+               VALIDATE OTP
+            -------------------------------------- */
 
             if (
                 !/^\d{6}$/.test(
@@ -926,16 +965,108 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
+               GET EMAIL
+
+               We accept email from the frontend.
+               If frontend does not send it, we also
+               try the current session as fallback.
+            -------------------------------------- */
+
+            let normalizedEmail =
+                email
+                    ? String(email)
+                        .trim()
+                        .toLowerCase()
+                    : null;
+
+
+            if (!normalizedEmail) {
+
+                normalizedEmail =
+                    req.session?.pendingSignup?.email ||
+                    null;
+            }
+
+
+            if (!normalizedEmail) {
+
+                return res.status(400).json({
+
+                    error:
+                        "Email is required to verify OTP."
+
+                });
+            }
+
+
+            /* --------------------------------------
+               FIND PENDING SIGNUP
+            -------------------------------------- */
+
+            const [pendingRows] =
+                await db.query(`
+
+                    SELECT
+
+                        id,
+                        name,
+                        phone,
+                        email,
+                        password,
+                        role,
+                        otp,
+                        otp_expires
+
+                    FROM pending_signups
+
+                    WHERE email = ?
+
+                    LIMIT 1
+
+                `, [
+                    normalizedEmail
+                ]);
+
+
+            if (
+                pendingRows.length === 0
+            ) {
+
+                return res.status(400).json({
+
+                    error:
+                        "No active signup verification found. Please request a new OTP."
+
+                });
+            }
+
+
+            const pendingSignup =
+                pendingRows[0];
+
+
+            /* --------------------------------------
                OTP EXPIRATION
-========================================== */
+            -------------------------------------- */
 
             if (
                 Date.now() >
-                pendingSignup.otpExpires
+                Number(
+                    pendingSignup.otp_expires
+                )
             ) {
 
-                delete req.session.pendingSignup;
+                await db.query(`
+
+                    DELETE FROM pending_signups
+
+                    WHERE id = ?
+
+                `, [
+                    pendingSignup.id
+                ]);
+
 
                 return res.status(400).json({
 
@@ -946,9 +1077,9 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                OTP CHECK
-========================================== */
+            -------------------------------------- */
 
             if (
                 String(otp) !==
@@ -964,27 +1095,40 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                FINAL EMAIL CHECK
-========================================== */
+            -------------------------------------- */
 
             const [existingEmail] =
-                await db.query(
-                    `
+                await db.query(`
+
                     SELECT id
+
                     FROM users
+
                     WHERE email = ?
+
                     LIMIT 1
-                    `,
-                    [pendingSignup.email]
-                );
+
+                `, [
+                    pendingSignup.email
+                ]);
 
 
             if (
                 existingEmail.length > 0
             ) {
 
-                delete req.session.pendingSignup;
+                await db.query(`
+
+                    DELETE FROM pending_signups
+
+                    WHERE id = ?
+
+                `, [
+                    pendingSignup.id
+                ]);
+
 
                 return res.status(409).json({
 
@@ -995,27 +1139,40 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                FINAL PHONE CHECK
-========================================== */
+            -------------------------------------- */
 
             const [existingPhone] =
-                await db.query(
-                    `
+                await db.query(`
+
                     SELECT id
+
                     FROM users
+
                     WHERE phone = ?
+
                     LIMIT 1
-                    `,
-                    [pendingSignup.phone]
-                );
+
+                `, [
+                    pendingSignup.phone
+                ]);
 
 
             if (
                 existingPhone.length > 0
             ) {
 
-                delete req.session.pendingSignup;
+                await db.query(`
+
+                    DELETE FROM pending_signups
+
+                    WHERE id = ?
+
+                `, [
+                    pendingSignup.id
+                ]);
+
 
                 return res.status(409).json({
 
@@ -1026,14 +1183,15 @@ app.post(
             }
 
 
-            /* ==========================================
+            /* --------------------------------------
                CREATE USER
-========================================== */
+            -------------------------------------- */
 
             const [result] =
-                await db.query(
-                    `
+                await db.query(`
+
                     INSERT INTO users
+
                     (
                         name,
                         phone,
@@ -1041,23 +1199,65 @@ app.post(
                         password,
                         role
                     )
+
                     VALUES (?, ?, ?, ?, ?)
-                    `,
-                    [
-                        pendingSignup.name,
-                        pendingSignup.phone,
-                        pendingSignup.email,
-                        pendingSignup.password,
-                        pendingSignup.role
-                    ]
-                );
+
+                `, [
+
+                    pendingSignup.name,
+
+                    pendingSignup.phone,
+
+                    pendingSignup.email,
+
+                    pendingSignup.password,
+
+                    pendingSignup.role
+
+                ]);
 
 
-            /* ==========================================
-               REMOVE PENDING SIGNUP
-========================================== */
+            /* --------------------------------------
+               DELETE PENDING SIGNUP
+            -------------------------------------- */
 
-            delete req.session.pendingSignup;
+            await db.query(`
+
+                DELETE FROM pending_signups
+
+                WHERE id = ?
+
+            `, [
+                pendingSignup.id
+            ]);
+
+
+            /* --------------------------------------
+               CREATE LOGIN SESSION
+            -------------------------------------- */
+
+            const user = {
+
+                id:
+                    result.insertId,
+
+                name:
+                    pendingSignup.name,
+
+                phone:
+                    pendingSignup.phone,
+
+                email:
+                    pendingSignup.email,
+
+                role:
+                    pendingSignup.role
+
+            };
+
+
+            req.session.user =
+                user;
 
 
             await new Promise(
@@ -1067,9 +1267,13 @@ app.post(
                         (error) => {
 
                             if (error) {
+
                                 reject(error);
+
                             } else {
+
                                 resolve();
+
                             }
 
                         }
@@ -1078,10 +1282,6 @@ app.post(
                 }
             );
 
-
-            /* ==========================================
-               SUCCESS
-========================================== */
 
             console.log(
                 `✅ New ${pendingSignup.role} account created: ${pendingSignup.email}`
@@ -1096,24 +1296,8 @@ app.post(
                 message:
                     "Email verified and account created successfully!",
 
-                user: {
-
-                    id:
-                        result.insertId,
-
-                    name:
-                        pendingSignup.name,
-
-                    phone:
-                        pendingSignup.phone,
-
-                    email:
-                        pendingSignup.email,
-
-                    role:
-                        pendingSignup.role
-
-                }
+                user:
+                    user
 
             });
 
@@ -1148,24 +1332,70 @@ app.post(
 
         try {
 
-            const pendingSignup =
-                req.session.pendingSignup;
+            const {
+                email
+            } = req.body;
 
 
-            if (!pendingSignup) {
+            const normalizedEmail =
+                email
+                    ? String(email)
+                        .trim()
+                        .toLowerCase()
+                    : null;
+
+
+            if (!normalizedEmail) {
 
                 return res.status(400).json({
 
                     error:
-                        "No active signup verification found."
+                        "Email is required to resend OTP."
 
                 });
             }
 
 
-            /* ==========================================
-               NEW OTP
-========================================== */
+            /* --------------------------------------
+               FIND PENDING SIGNUP
+            -------------------------------------- */
+
+            const [pendingRows] =
+                await db.query(`
+
+                    SELECT *
+
+                    FROM pending_signups
+
+                    WHERE email = ?
+
+                    LIMIT 1
+
+                `, [
+                    normalizedEmail
+                ]);
+
+
+            if (
+                pendingRows.length === 0
+            ) {
+
+                return res.status(400).json({
+
+                    error:
+                        "No active signup verification found. Please request a new OTP."
+
+                });
+            }
+
+
+            const pendingSignup =
+                pendingRows[0];
+
+
+            /* --------------------------------------
+               GENERATE NEW OTP
+            -------------------------------------- */
 
             const newOtp =
                 Math.floor(
@@ -1179,39 +1409,34 @@ app.post(
                 5 * 60 * 1000;
 
 
-            pendingSignup.otp =
-                newOtp;
+            /* --------------------------------------
+               UPDATE MYSQL
+            -------------------------------------- */
 
-            pendingSignup.otpExpires =
-                newOtpExpires;
+            await db.query(`
 
+                UPDATE pending_signups
 
-            /* ==========================================
-               SAVE SESSION
-========================================== */
+                SET
+                    otp = ?,
+                    otp_expires = ?
 
-            await new Promise(
-                (resolve, reject) => {
+                WHERE id = ?
 
-                    req.session.save(
-                        (error) => {
+            `, [
 
-                            if (error) {
-                                reject(error);
-                            } else {
-                                resolve();
-                            }
+                newOtp,
 
-                        }
-                    );
+                newOtpExpires,
 
-                }
-            );
+                pendingSignup.id
+
+            ]);
 
 
-            /* ==========================================
-               SEND NEW EMAIL
-========================================== */
+            /* --------------------------------------
+               SEND NEW OTP
+            -------------------------------------- */
 
             await sendEmail({
 
@@ -1224,16 +1449,14 @@ app.post(
                 text:
                     `Your new Kisan Connect verification code is ${newOtp}. This code expires in 5 minutes.`,
 
-                html:
-                    `
+                html: `
+
                     <div style="
                         font-family: Arial, sans-serif;
                         max-width: 600px;
                         margin: auto;
                         padding: 30px;
                         text-align: center;
-                        border: 1px solid #ddd;
-                        border-radius: 12px;
                     ">
 
                         <h2>
@@ -1257,7 +1480,8 @@ app.post(
                         </p>
 
                     </div>
-                    `
+
+                `
             });
 
 
@@ -1314,10 +1538,6 @@ app.post(
             } = req.body;
 
 
-            /* ==========================================
-               VALIDATION
-========================================== */
-
             if (
                 !email ||
                 !password
@@ -1338,13 +1558,9 @@ app.post(
                     .toLowerCase();
 
 
-            /* ==========================================
-               FIND USER
-========================================== */
-
             const [users] =
-                await db.query(
-                    `
+                await db.query(`
+
                     SELECT
                         id,
                         name,
@@ -1352,12 +1568,16 @@ app.post(
                         email,
                         password,
                         role
+
                     FROM users
+
                     WHERE email = ?
+
                     LIMIT 1
-                    `,
-                    [normalizedEmail]
-                );
+
+                `, [
+                    normalizedEmail
+                ]);
 
 
             if (
@@ -1377,10 +1597,6 @@ app.post(
                 users[0];
 
 
-            /* ==========================================
-               PASSWORD CHECK
-========================================== */
-
             const passwordMatches =
                 await bcrypt.compare(
                     password,
@@ -1399,16 +1615,8 @@ app.post(
             }
 
 
-            /* ==========================================
-               REMOVE PASSWORD
-========================================== */
-
             delete user.password;
 
-
-            /* ==========================================
-               LOGIN SESSION
-========================================== */
 
             req.session.user =
                 user;
@@ -1421,9 +1629,13 @@ app.post(
                         (error) => {
 
                             if (error) {
+
                                 reject(error);
+
                             } else {
+
                                 resolve();
+
                             }
 
                         }
@@ -1454,10 +1666,7 @@ app.post(
         } catch (error) {
 
             console.error(
-                "❌ Login error:"
-            );
-
-            console.error(
+                "❌ Login error:",
                 error.message
             );
 
@@ -1548,8 +1757,64 @@ app.post(
     }
 );
 
+
 /* ==========================================
-   404 ROUTE
+   ADMIN WIPE USERS
+==========================================
+
+   DEMO / DEVELOPMENT USE ONLY.
+
+   IMPORTANT:
+   Remove this endpoint before public release.
+========================================== */
+
+app.delete(
+    "/api/admin/wipe-users",
+    async (req, res) => {
+
+        try {
+
+            await db.query(
+                "DELETE FROM users"
+            );
+
+            console.log(
+                "🧨 ALL USERS DELETED FROM DATABASE"
+            );
+
+            return res.json({
+
+                success:
+                    true,
+
+                message:
+                    "All users have been deleted."
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "❌ Failed to wipe users:",
+                error.message
+            );
+
+            return res.status(500).json({
+
+                success:
+                    false,
+
+                error:
+                    "Could not delete users."
+
+            });
+        }
+    }
+);
+
+
+/* ==========================================
+   404
 ========================================== */
 
 app.use(
@@ -1564,7 +1829,6 @@ app.use(
                 req.originalUrl
 
         });
-
     }
 );
 
@@ -1587,7 +1851,6 @@ app.use(
                 "Internal server error"
 
         });
-
     }
 );
 
@@ -1619,11 +1882,8 @@ app.listen(
         );
 
 
-        // Test database
         await testDatabase();
 
-
-        // Test HTTPS email configuration
         await testEmail();
 
     }
