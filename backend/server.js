@@ -2,6 +2,7 @@
    🌾 KISAN CONNECT
    server.js
    Complete Backend Server
+   HTTPS EMAIL API VERSION
 ========================================== */
 
 const express = require("express");
@@ -9,7 +10,6 @@ const mysql = require("mysql2/promise");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const session = require("express-session");
-const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
@@ -18,8 +18,6 @@ const app = express();
    SERVER CONFIGURATION
 ========================================== */
 
-// Render provides PORT automatically.
-// Locally it falls back to 3000.
 const PORT = Number(process.env.PORT) || 3000;
 
 const IS_PRODUCTION =
@@ -35,19 +33,14 @@ const allowedOrigins = [
     "http://127.0.0.1:5500"
 ];
 
-// When frontend is hosted later, add:
-// FRONTEND_URL=https://your-frontend-url
 if (process.env.FRONTEND_URL) {
-
     allowedOrigins.push(
         process.env.FRONTEND_URL.replace(/\/$/, "")
     );
 }
 
-
 app.use(
     cors({
-
         origin: function (origin, callback) {
 
             // Allow requests without an Origin.
@@ -137,7 +130,6 @@ const db = mysql.createPool({
         process.env.DB_NAME,
 
     ssl: {
-
         rejectUnauthorized: false
     },
 
@@ -150,37 +142,199 @@ const db = mysql.createPool({
 
 
 /* ==========================================
-   GMAIL / NODEMAILER
+   HTTPS EMAIL API
+   RESEND
 ========================================== */
 
-const transporter =
-    nodemailer.createTransport({
+/*
+   IMPORTANT:
 
-        host: "smtp.gmail.com",
+   We are NOT using Gmail SMTP anymore.
 
-        port: 587,
+   Email is sent through Resend's HTTPS API.
 
-        secure: false,
+   Required Render environment variables:
 
-        requireTLS: true,
+   RESEND_API_KEY
+   EMAIL_FROM
 
-        auth: {
+   Example:
 
-            user:
-                process.env.EMAIL_USER,
+   RESEND_API_KEY=re_xxxxxxxxxxxxxxxxx
 
-            pass:
-                process.env.EMAIL_APP_PASSWORD
+   EMAIL_FROM=Kisan Connect <onboarding@resend.dev>
 
-        },
+   IMPORTANT:
+   For production/custom sending addresses,
+   use a sender/domain verified in Resend.
+*/
 
-        connectionTimeout: 15000,
+async function sendEmail({
+    to,
+    subject,
+    text,
+    html
+}) {
 
-        greetingTimeout: 15000,
+    if (!process.env.RESEND_API_KEY) {
 
-        socketTimeout: 15000
+        throw new Error(
+            "RESEND_API_KEY is not configured"
+        );
+    }
 
-    });
+    if (!process.env.EMAIL_FROM) {
+
+        throw new Error(
+            "EMAIL_FROM is not configured"
+        );
+    }
+
+
+    console.log(
+        `📧 Sending email through HTTPS API to ${to}...`
+    );
+
+
+    const response = await fetch(
+        "https://api.resend.com/emails",
+        {
+            method: "POST",
+
+            headers: {
+
+                "Authorization":
+                    `Bearer ${process.env.RESEND_API_KEY}`,
+
+                "Content-Type":
+                    "application/json"
+            },
+
+            body: JSON.stringify({
+
+                from:
+                    process.env.EMAIL_FROM,
+
+                to: [
+                    to
+                ],
+
+                subject:
+                    subject,
+
+                text:
+                    text,
+
+                html:
+                    html
+            })
+        }
+    );
+
+
+    const responseText =
+        await response.text();
+
+
+    let data = {};
+
+    try {
+
+        data =
+            responseText
+                ? JSON.parse(responseText)
+                : {};
+
+    } catch {
+
+        data = {
+            raw: responseText
+        };
+    }
+
+
+    if (!response.ok) {
+
+        console.error(
+            "❌ Email API request failed"
+        );
+
+        console.error(
+            "HTTP status:",
+            response.status
+        );
+
+        console.error(
+            "Response:",
+            data
+        );
+
+        throw new Error(
+            data?.message ||
+            data?.error ||
+            `Email API returned HTTP ${response.status}`
+        );
+    }
+
+
+    console.log(
+        "✅ Email API accepted the message"
+    );
+
+    if (data.id) {
+
+        console.log(
+            "📨 Email ID:",
+            data.id
+        );
+    }
+
+
+    return data;
+}
+
+
+/* ==========================================
+   EMAIL SYSTEM TEST
+========================================== */
+
+async function testEmail() {
+
+    console.log(
+        "📧 Testing HTTPS email configuration..."
+    );
+
+    console.log(
+        "📧 Resend API key configured:",
+        !!process.env.RESEND_API_KEY
+    );
+
+    console.log(
+        "📧 Email sender configured:",
+        !!process.env.EMAIL_FROM
+    );
+
+
+    if (
+        !process.env.RESEND_API_KEY ||
+        !process.env.EMAIL_FROM
+    ) {
+
+        console.error(
+            "❌ Email system is NOT configured!"
+        );
+
+        return false;
+    }
+
+
+    console.log(
+        "✅ HTTPS email configuration looks ready."
+    );
+
+    return true;
+}
+
 
 /* ==========================================
    DATABASE TEST
@@ -221,66 +375,6 @@ async function testDatabase() {
 
 
 /* ==========================================
-   EMAIL TEST
-========================================== */
-
-async function testEmail() {
-    try {
-        console.log("📧 Testing Gmail SMTP connection...");
-        console.log("📧 Gmail user configured:", !!process.env.EMAIL_USER);
-        console.log(
-            "📧 Gmail app password configured:",
-            !!process.env.EMAIL_APP_PASSWORD
-        );
-
-        await transporter.verify();
-
-        console.log(
-            "✅ Gmail SMTP connection verified successfully!"
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "❌ Gmail SMTP connection FAILED!"
-        );
-
-        console.error(
-            "Error name:",
-            error.name
-        );
-
-        console.error(
-            "Error code:",
-            error.code
-        );
-
-        console.error(
-            "Error command:",
-            error.command
-        );
-
-        console.error(
-            "Error response:",
-            error.response
-        );
-
-        console.error(
-            "Error responseCode:",
-            error.responseCode
-        );
-
-        console.error(
-            "Error message:",
-            error.message
-        );
-
-        return false;
-    }
-}
-/* ==========================================
    HOME ROUTE
 ========================================== */
 
@@ -288,7 +382,8 @@ app.get("/", (req, res) => {
 
     res.json({
 
-        status: "online",
+        status:
+            "online",
 
         message:
             "🌾 Kisan Connect Backend is working!",
@@ -297,6 +392,7 @@ app.get("/", (req, res) => {
             IS_PRODUCTION
                 ? "production"
                 : "development"
+
     });
 
 });
@@ -318,13 +414,17 @@ app.get(
 
             res.json({
 
-                status: "healthy",
+                status:
+                    "healthy",
 
                 database:
                     "connected",
 
                 email:
-                    "configured"
+                    process.env.RESEND_API_KEY &&
+                    process.env.EMAIL_FROM
+                        ? "configured"
+                        : "not configured"
 
             });
 
@@ -341,7 +441,10 @@ app.get(
                     "unhealthy",
 
                 database:
-                    "failed"
+                    "failed",
+
+                email:
+                    "unknown"
 
             });
         }
@@ -599,7 +702,7 @@ app.post(
 
             /* ==========================================
                SAVE PENDING SIGNUP
-            ========================================== */
+========================================== */
 
             req.session.pendingSignup = {
 
@@ -650,13 +753,10 @@ app.post(
 
 
             /* ==========================================
-               SEND EMAIL
-            ========================================== */
+               SEND VERIFICATION EMAIL
+========================================== */
 
-            await transporter.sendMail({
-
-                from:
-                    `"Kisan Connect" <${process.env.EMAIL_USER}>`,
+            await sendEmail({
 
                 to:
                     normalizedEmail,
@@ -675,11 +775,17 @@ app.post(
                         margin: auto;
                         padding: 30px;
                         text-align: center;
+                        border: 1px solid #ddd;
+                        border-radius: 12px;
                     ">
 
                         <h2>
                             🌾 Kisan Connect
                         </h2>
+
+                        <p>
+                            Hello ${String(name).trim()},
+                        </p>
 
                         <p>
                             Your email verification code is:
@@ -697,9 +803,12 @@ app.post(
                             <strong>5 minutes</strong>.
                         </p>
 
-                        <p>
-                            If you did not request
-                            this code, ignore this email.
+                        <p style="
+                            color: #666;
+                            font-size: 13px;
+                        ">
+                            If you did not request this code,
+                            you can safely ignore this email.
                         </p>
 
                     </div>
@@ -709,7 +818,7 @@ app.post(
 
             /* ==========================================
                SUCCESS
-            ========================================== */
+========================================== */
 
             console.log(
                 `📧 OTP sent successfully to ${normalizedEmail}`
@@ -739,7 +848,7 @@ app.post(
 
             /* ==========================================
                CLEAN PENDING SESSION ON FAILURE
-            ========================================== */
+========================================== */
 
             if (
                 req.session &&
@@ -748,6 +857,9 @@ app.post(
 
                 delete req.session.pendingSignup;
 
+                req.session.save(
+                    () => {}
+                );
             }
 
 
@@ -782,7 +894,7 @@ app.post(
 
             /* ==========================================
                CHECK SESSION
-            ========================================== */
+========================================== */
 
             if (!pendingSignup) {
 
@@ -797,7 +909,7 @@ app.post(
 
             /* ==========================================
                OTP FORMAT
-            ========================================== */
+========================================== */
 
             if (
                 !/^\d{6}$/.test(
@@ -816,7 +928,7 @@ app.post(
 
             /* ==========================================
                OTP EXPIRATION
-            ========================================== */
+========================================== */
 
             if (
                 Date.now() >
@@ -836,7 +948,7 @@ app.post(
 
             /* ==========================================
                OTP CHECK
-            ========================================== */
+========================================== */
 
             if (
                 String(otp) !==
@@ -854,7 +966,7 @@ app.post(
 
             /* ==========================================
                FINAL EMAIL CHECK
-            ========================================== */
+========================================== */
 
             const [existingEmail] =
                 await db.query(
@@ -885,7 +997,7 @@ app.post(
 
             /* ==========================================
                FINAL PHONE CHECK
-            ========================================== */
+========================================== */
 
             const [existingPhone] =
                 await db.query(
@@ -916,7 +1028,7 @@ app.post(
 
             /* ==========================================
                CREATE USER
-            ========================================== */
+========================================== */
 
             const [result] =
                 await db.query(
@@ -943,7 +1055,7 @@ app.post(
 
             /* ==========================================
                REMOVE PENDING SIGNUP
-            ========================================== */
+========================================== */
 
             delete req.session.pendingSignup;
 
@@ -968,8 +1080,8 @@ app.post(
 
 
             /* ==========================================
-               SUCCESS RESPONSE
-            ========================================== */
+               SUCCESS
+========================================== */
 
             console.log(
                 `✅ New ${pendingSignup.role} account created: ${pendingSignup.email}`
@@ -1053,7 +1165,7 @@ app.post(
 
             /* ==========================================
                NEW OTP
-            ========================================== */
+========================================== */
 
             const newOtp =
                 Math.floor(
@@ -1076,7 +1188,7 @@ app.post(
 
             /* ==========================================
                SAVE SESSION
-            ========================================== */
+========================================== */
 
             await new Promise(
                 (resolve, reject) => {
@@ -1099,12 +1211,9 @@ app.post(
 
             /* ==========================================
                SEND NEW EMAIL
-            ========================================== */
+========================================== */
 
-            await transporter.sendMail({
-
-                from:
-                    `"Kisan Connect" <${process.env.EMAIL_USER}>`,
+            await sendEmail({
 
                 to:
                     pendingSignup.email,
@@ -1123,6 +1232,8 @@ app.post(
                         margin: auto;
                         padding: 30px;
                         text-align: center;
+                        border: 1px solid #ddd;
+                        border-radius: 12px;
                     ">
 
                         <h2>
@@ -1205,7 +1316,7 @@ app.post(
 
             /* ==========================================
                VALIDATION
-            ========================================== */
+========================================== */
 
             if (
                 !email ||
@@ -1229,7 +1340,7 @@ app.post(
 
             /* ==========================================
                FIND USER
-            ========================================== */
+========================================== */
 
             const [users] =
                 await db.query(
@@ -1268,7 +1379,7 @@ app.post(
 
             /* ==========================================
                PASSWORD CHECK
-            ========================================== */
+========================================== */
 
             const passwordMatches =
                 await bcrypt.compare(
@@ -1290,14 +1401,14 @@ app.post(
 
             /* ==========================================
                REMOVE PASSWORD
-            ========================================== */
+========================================== */
 
             delete user.password;
 
 
             /* ==========================================
                LOGIN SESSION
-            ========================================== */
+========================================== */
 
             req.session.user =
                 user;
@@ -1454,6 +1565,7 @@ app.use(
                 req.originalUrl
 
         });
+
     }
 );
 
@@ -1476,6 +1588,7 @@ app.use(
                 "Internal server error"
 
         });
+
     }
 );
 
@@ -1511,7 +1624,7 @@ app.listen(
         await testDatabase();
 
 
-        // Test Gmail
+        // Test HTTPS email configuration
         await testEmail();
 
     }
