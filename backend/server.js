@@ -173,7 +173,7 @@ async function sendEmail({
         );
     }
 
-    if (!process.env.RESEND_FROM_EMAIL) {
+    if (!process.env.FROM_EMAIL) {
 
         throw new Error(
             "RESEND_FROM_EMAIL is not configured"
