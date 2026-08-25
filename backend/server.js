@@ -1549,32 +1549,6 @@ app.post(
 );
 
 /* ==========================================
-   TEMPORARY DATABASE WIPE
-   ⚠️ DELETE THIS ROUTE AFTER USING IT
-========================================== */
-
-app.delete("/api/admin/wipe-users", async (req, res) => {
-    try {
-        await db.query("DELETE FROM users");
-
-        console.log("🧨 ALL USERS DELETED FROM DATABASE");
-
-        return res.json({
-            success: true,
-            message: "All users have been deleted."
-        });
-
-    } catch (error) {
-        console.error("❌ Failed to wipe users:", error.message);
-
-        return res.status(500).json({
-            success: false,
-            error: "Failed to delete users"
-        });
-    }
-});
-
-/* ==========================================
    404 ROUTE
 ========================================== */
 
