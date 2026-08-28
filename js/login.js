@@ -1,16 +1,26 @@
 /* ==========================================
    🌾 KISAN CONNECT
    login.js
+
+   Simple Authentication System
+
+   Features:
+   - Direct signup
+   - Unique email check
+   - Unique phone check
+   - Secure password hashing handled by backend
+   - Login
+   - Session support
+   - Role-based dashboard redirect
 ========================================== */
+
 
 /* ==========================================
    API CONFIGURATION
 ========================================== */
 
-// LIVE RENDER BACKEND
-const API_URL = "https://kisan-connect-backend.onrender.com";
-// Later, when frontend is hosted:
-// const API_URL = "https://kisan-connect-backend.onrender.com";
+const API_URL =
+    "https://kisan-connect-backend.onrender.com";
 
 
 /* ==========================================
@@ -27,14 +37,8 @@ if (signupForm) {
         "submit",
         async function (e) {
 
-            // IMPORTANT:
-            // Stop the browser from refreshing
-            // the page before doing anything else.
+            // Stop normal form submission
             e.preventDefault();
-
-            console.log(
-                "🚀 SIGNUP SUBMIT FIRED"
-            );
 
 
             /* ==========================================
@@ -131,64 +135,61 @@ if (signupForm) {
 
 
             /* ==========================================
-               DISABLE BUTTON
+               SIGNUP BUTTON
             ========================================== */
 
             const signupBtn =
                 document.getElementById("signupBtn");
 
+            const originalText =
+                signupBtn.textContent;
+
             signupBtn.disabled = true;
 
             signupBtn.textContent =
-                "Sending OTP...";
+                "Creating Account...";
 
 
             /* ==========================================
-               SEND OTP REQUEST
+               SEND SIGNUP REQUEST
             ========================================== */
 
             try {
 
                 console.log(
-                    "📡 Sending OTP request..."
-                );
-
-                console.log(
-                    "📡 API:",
-                    `${API_URL}/api/signup/request-otp`
+                    "🚀 Creating new account..."
                 );
 
 
                 const response =
                     await fetch(
-                        `${API_URL}/api/signup/request-otp`,
+                        `${API_URL}/api/signup`,
                         {
+
                             method: "POST",
 
                             headers: {
+
                                 "Content-Type":
                                     "application/json"
+
                             },
 
                             credentials: "include",
 
-                            body: JSON.stringify({
+                            body:
+                                JSON.stringify({
 
-                                name,
-                                phone,
-                                email,
-                                password,
-                                role
+                                    name,
+                                    phone,
+                                    email,
+                                    password,
+                                    role
 
-                            })
+                                })
+
                         }
                     );
-
-
-                console.log(
-                    "📥 Backend status:",
-                    response.status
-                );
 
 
                 const data =
@@ -202,40 +203,54 @@ if (signupForm) {
                 if (!response.ok) {
 
                     console.error(
-                        "❌ Backend error:",
+                        "❌ Signup error:",
                         data
                     );
 
                     alert(
                         data.error ||
-                        "Could not send verification code."
+                        "Could not create account."
                     );
 
                     signupBtn.disabled = false;
 
                     signupBtn.textContent =
-                        "Create Account";
+                        originalText;
 
                     return;
                 }
 
 
                 /* ==========================================
-                   OTP SENT
+                   SAVE USER
                 ========================================== */
 
-                console.log(
-                    "✅ OTP request successful"
+                localStorage.setItem(
+                    "currentUser",
+                    JSON.stringify(data.user)
                 );
+
+
+                console.log(
+                    "✅ Account created:",
+                    data.user
+                );
+
 
                 alert(
-                    "📧 Verification code sent to your email!"
+                    "🎉 Account created successfully! Welcome " +
+                    data.user.name +
+                    "!"
                 );
 
 
-                // Move to OTP page
-                window.location.href =
-                    "otp.html";
+                /* ==========================================
+                   ROLE REDIRECT
+                ========================================== */
+
+                redirectUserByRole(
+                    data.user
+                );
 
             }
 
@@ -253,18 +268,14 @@ if (signupForm) {
                 signupBtn.disabled = false;
 
                 signupBtn.textContent =
-                    "Create Account";
+                    originalText;
+
             }
 
         }
     );
 
 }
-
-
-console.log(
-    "🌾 Kisan Connect Signup System Loaded Successfully!"
-);
 
 
 /* ==========================================
@@ -281,6 +292,7 @@ if (loginForm) {
         "submit",
         async function (e) {
 
+            // Stop normal form submission
             e.preventDefault();
 
 
@@ -316,31 +328,65 @@ if (loginForm) {
 
 
             /* ==========================================
+               LOGIN BUTTON
+            ========================================== */
+
+            const loginBtn =
+                document.getElementById("loginBtn");
+
+            const originalText =
+                loginBtn
+                    ? loginBtn.textContent
+                    : "Login";
+
+
+            if (loginBtn) {
+
+                loginBtn.disabled = true;
+
+                loginBtn.textContent =
+                    "Logging in...";
+
+            }
+
+
+            /* ==========================================
                LOGIN REQUEST
             ========================================== */
 
             try {
+
+                console.log(
+                    "🔐 Attempting login..."
+                );
+
 
                 const response =
                     await fetch(
                         `${API_URL}/api/login`,
                         {
 
-                            method: "POST",
+                            method:
+                                "POST",
 
                             headers: {
+
                                 "Content-Type":
                                     "application/json"
+
                             },
 
-                            credentials: "include",
+                            credentials:
+                                "include",
 
-                            body: JSON.stringify({
+                            body:
+                                JSON.stringify({
 
-                                email,
-                                password
+                                    email,
+                                    password
 
-                            })
+                                })
+
                         }
                     );
 
@@ -360,6 +406,17 @@ if (loginForm) {
                         "Invalid Email or Password."
                     );
 
+
+                    if (loginBtn) {
+
+                        loginBtn.disabled =
+                            false;
+
+                        loginBtn.textContent =
+                            originalText;
+
+                    }
+
                     return;
                 }
 
@@ -374,6 +431,12 @@ if (loginForm) {
                 );
 
 
+                console.log(
+                    "✅ Login successful:",
+                    data.user
+                );
+
+
                 alert(
                     "Welcome " +
                     data.user.name +
@@ -385,31 +448,9 @@ if (loginForm) {
                    ROLE REDIRECT
                 ========================================== */
 
-                if (
-                    data.user.role ===
-                    "Farmer"
-                ) {
-
-                    window.location.href =
-                        "farmer-dashboard.html";
-
-                }
-
-                else if (
-                    data.user.role ===
-                    "Labourer"
-                ) {
-
-                    window.location.href =
-                        "labour-dashboard.html";
-
-                }
-
-                else {
-
-                    window.location.href =
-                        "seller-dashboard.html";
-                }
+                redirectUserByRole(
+                    data.user
+                );
 
             }
 
@@ -423,9 +464,117 @@ if (loginForm) {
                 alert(
                     "❌ Could not connect to Kisan Connect server."
                 );
+
+
+                if (loginBtn) {
+
+                    loginBtn.disabled =
+                        false;
+
+                    loginBtn.textContent =
+                        originalText;
+
+                }
+
             }
 
         }
     );
 
 }
+
+
+/* ==========================================
+   ROLE-BASED REDIRECT
+
+   This function is used by BOTH:
+   - Signup
+   - Login
+========================================== */
+
+function redirectUserByRole(user) {
+
+    if (!user || !user.role) {
+
+        console.error(
+            "❌ Invalid user data:",
+            user
+        );
+
+        alert(
+            "Something went wrong with your account."
+        );
+
+        return;
+    }
+
+
+    /* ==========================================
+       FARMER
+    ========================================== */
+
+    if (
+        user.role === "Farmer"
+    ) {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+    }
+
+
+    /* ==========================================
+       LABOURER
+    ========================================== */
+
+    else if (
+        user.role === "Labourer"
+    ) {
+
+        window.location.href =
+            "labour-dashboard.html";
+
+    }
+
+
+    /* ==========================================
+       SELLER
+    ========================================== */
+
+    else if (
+        user.role === "Seller"
+    ) {
+
+        window.location.href =
+            "seller-dashboard.html";
+
+    }
+
+
+    /* ==========================================
+       UNKNOWN ROLE
+    ========================================== */
+
+    else {
+
+        console.error(
+            "❌ Unknown role:",
+            user.role
+        );
+
+        alert(
+            "Invalid user role."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   SYSTEM READY
+========================================== */
+
+console.log(
+    "🌾 Kisan Connect Authentication System Loaded!"
+);

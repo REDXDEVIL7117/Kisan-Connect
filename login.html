@@ -5,69 +5,112 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Login | Kisan Connect</title>
 
-    <link rel="stylesheet" href="css/login.css">
+    <link
+        rel="stylesheet"
+        href="css/login.css"
+    >
 
 </head>
 
 <body>
 
-<div class="signup-container">
+    <div class="signup-container">
 
-<div class="signup-box">
+        <div class="signup-box">
 
-<img src="images/logo.jpg" class="logo">
+            <!-- KISAN CONNECT LOGO -->
+            <img
+                src="images/logo.jpg"
+                class="logo"
+                alt="Kisan Connect Logo"
+            >
 
-<h1>Welcome Back</h1>
 
-<p>Login to continue</p>
+            <h1>
+                Welcome Back
+            </h1>
 
-<form id="loginForm">
+            <p>
+                Login to continue
+            </p>
 
-<div class="input-group">
 
-<label>Email</label>
+            <!-- LOGIN FORM -->
+            <form id="loginForm">
 
-<input type="email" id="loginEmail" required>
 
-</div>
+                <!-- EMAIL -->
+                <div class="input-group">
 
-<div class="input-group">
+                    <label for="loginEmail">
+                        Email
+                    </label>
 
-<label>Password</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
 
-<input type="password" id="loginPassword" required>
+                </div>
 
-</div>
 
-<button class="signup-btn">
+                <!-- PASSWORD -->
+                <div class="input-group">
 
-Login
+                    <label for="loginPassword">
+                        Password
+                    </label>
 
-</button>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        required
+                    >
 
-</form>
+                </div>
 
-<p class="bottom-text">
 
-Don't have an account?
+                <!-- LOGIN BUTTON -->
+                <button
+                    type="submit"
+                    class="signup-btn"
+                    id="loginBtn"
+                >
+                    Login
+                </button>
 
-<a href="signup.html">
 
-Create One
+            </form>
 
-</a>
 
-</p>
+            <!-- SIGNUP LINK -->
+            <p class="bottom-text">
 
-</div>
+                Don't have an account?
 
-</div>
+                <a href="signup.html">
+                    Create One
+                </a>
 
-<script src="js/login.js"></script>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- AUTHENTICATION SCRIPT -->
+    <script src="js/login.js"></script>
 
 </body>
 
